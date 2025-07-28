@@ -1,4 +1,5 @@
 import AppError from '../../errorHelpers/AppError';
+import { QueryBuilder } from '../../utils/QueryBuilder';
 import type { IUser } from './user.model';
 import { User } from './user.model';
 
@@ -60,36 +61,22 @@ const createUser = async (userData: ICreateUser): Promise<Omit<IUser, 'password'
   return userObject;
 };
 
-const getAllUsers = async (page: number = 1, limit: number = 20, search?: string) => {
-  const skip = (page - 1) * limit;
+const getAllUsers = async (query: Record<string, any>) => {
+  const searchableFields = ['name', 'email', 'phone'];
   
-  // Build search query
-  const searchQuery: any = {};
-  if (search) {
-    searchQuery.$or = [
-      { name: { $regex: search, $options: 'i' } },
-      { email: { $regex: search, $options: 'i' } },
-      { phone: { $regex: search, $options: 'i' } },
-    ];
-  }
+  const userQuery = new QueryBuilder(User.find().select('-password') as any, query)
+    .search(searchableFields)
+    .filter()
+    .sort()
+    .paginate()
+    .fields();
 
-  const users = await User.find(searchQuery)
-    .select('-password')
-    .sort({ createdAt: -1 })
-    .skip(skip)
-    .limit(limit);
-
-  const total = await User.countDocuments(searchQuery);
+  const users = await userQuery.build();
+  const meta = await userQuery.getMeta();
 
   return {
     users,
-    pagination: {
-      currentPage: page,
-      totalPages: Math.ceil(total / limit),
-      totalUsers: total,
-      hasNext: page < Math.ceil(total / limit),
-      hasPrev: page > 1,
-    },
+    meta,
   };
 };
 

@@ -1,5 +1,6 @@
 import bcrypt from 'bcrypt';
 import { model, Model, Schema } from 'mongoose';
+import { IsActive } from './user.interface';
 
 export interface IAddress {
   street: string;
@@ -18,6 +19,9 @@ export interface IUser {
   address: IAddress;
   role: 'admin' | 'sender' | 'receiver';
   isBlocked: boolean;
+  isVerified: boolean;
+  isActive: IsActive;
+  isDeleted: boolean;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -54,7 +58,7 @@ const addressSchema = new Schema<IAddress>({
     required: [true, 'Country is required'],
     trim: true,
   },
-}, { _id: false });
+}, { _id: false, versionKey: false });
 
 const userSchema = new Schema<IUser, UserModel, IUserMethods>({
   name: {
@@ -101,14 +105,22 @@ const userSchema = new Schema<IUser, UserModel, IUserMethods>({
     type: Boolean,
     default: false,
   },
+  isVerified: {
+    type: Boolean,
+    default: false,
+  },
+  isActive: {
+    type: String,
+    enum: Object.values(IsActive),
+    default: IsActive.ACTIVE,
+  },
+  isDeleted: {
+    type: Boolean,
+    default: false,
+  },
 }, {
   timestamps: true,
-  toJSON: {
-    transform: function(doc, ret) {
-      delete (ret as any).password;
-      return ret;
-    },
-  },
+  versionKey: false
 });
 
 // Hash password before saving
