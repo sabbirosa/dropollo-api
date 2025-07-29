@@ -32,7 +32,7 @@ const registerValidationSchema = z.object({
     phone: z.string()
       .min(1, 'Phone number is required')
       .regex(
-        /^\+?[\d\s\-\(\)]+$/,
+        /^\+?[\d\s\-()]+$/,
         'Please enter a valid phone number'
       )
       .trim(),
@@ -63,13 +63,13 @@ const updateProfileValidationSchema = z.object({
       .trim()
       .optional(),
     
-    phone: z.string()
-      .regex(
-        /^\+?[\d\s\-\(\)]+$/,
-        'Please enter a valid phone number'
-      )
-      .trim()
-      .optional(),
+          phone: z.string()
+        .regex(
+          /^\+?[\d\s\-()]+$/,
+          'Please enter a valid phone number'
+        )
+        .trim()
+        .optional(),
     
     address: addressValidationSchema.optional(),
   }),

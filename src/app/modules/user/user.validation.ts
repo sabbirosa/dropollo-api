@@ -32,7 +32,7 @@ const createUserValidationSchema = z.object({
     phone: z.string()
       .min(1, 'Phone number is required')
       .regex(
-        /^\+?[\d\s\-\(\)]+$/,
+        /^\+?[\d\s\-()]+$/,
         'Please enter a valid phone number'
       )
       .trim(),
@@ -53,7 +53,7 @@ const updateUserValidationSchema = z.object({
     
     phone: z.string()
       .regex(
-        /^\+?[\d\s\-\(\)]+$/,
+        /^\+?[\d\s\-()]+$/,
         'Please enter a valid phone number'
       )
       .trim()

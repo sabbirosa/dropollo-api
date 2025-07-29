@@ -27,9 +27,10 @@ const registerUser = async (userData: IRegisterUser): Promise<Omit<IUser, 'passw
   
   // Return user without password
   const userObject = newUser.toObject();
-  delete (userObject as any).password;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { password: _, ...userWithoutPassword } = userObject;
   
-  return userObject;
+  return userWithoutPassword;
 };
 
 const loginUser = async (loginData: ILoginUser): Promise<IAuthResponse> => {
@@ -71,10 +72,11 @@ const loginUser = async (loginData: ILoginUser): Promise<IAuthResponse> => {
 
   // Return user data without password and tokens
   const userObject = user.toObject();
-  delete (userObject as any).password;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { password: _, ...userWithoutPassword } = userObject;
 
   return {
-    user: userObject,
+    user: userWithoutPassword,
     accessToken: tokens.accessToken,
     refreshToken: tokens.refreshToken,
   };

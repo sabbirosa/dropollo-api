@@ -7,7 +7,7 @@ import { UserService } from './user.service';
 
 // Get all users (Admin only)
 const getAllUsers = catchAsync(async (req: Request, res: Response) => {
-  const result = await UserService.getAllUsers(req.query as Record<string, any>);
+  const result = await UserService.getAllUsers(req.query as Record<string, string>);
 
   sendResponse(res, {
     statusCode: StatusCodes.OK,

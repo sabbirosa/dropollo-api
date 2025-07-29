@@ -56,14 +56,16 @@ const createUser = async (userData: ICreateUser): Promise<Omit<IUser, 'password'
   
   // Return user without password
   const userObject = newUser.toObject();
-  delete (userObject as any).password;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { password: _, ...userWithoutPassword } = userObject;
   
-  return userObject;
+  return userWithoutPassword;
 };
 
-const getAllUsers = async (query: Record<string, any>) => {
+const getAllUsers = async (query: Record<string, string>) => {
   const searchableFields = ['name', 'email', 'phone'];
   
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const userQuery = new QueryBuilder(User.find().select('-password') as any, query)
     .search(searchableFields)
     .filter()

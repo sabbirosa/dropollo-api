@@ -86,7 +86,7 @@ const userSchema = new Schema<IUser, UserModel, IUserMethods>({
     type: String,
     required: [true, 'Phone number is required'],
     trim: true,
-    match: [/^\+?[\d\s\-\(\)]+$/, 'Please enter a valid phone number'],
+    match: [/^\+?[\d\s\-()]+$/, 'Please enter a valid phone number'],
   },
   address: {
     type: addressSchema,
