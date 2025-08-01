@@ -1,0 +1,1461 @@
+{
+	"info": {
+		"_postman_id": "b8381f3f-253f-41fe-8e8a-d5da2d0db4df",
+		"name": "Dropollo API V1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32044624"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "User Registration",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john.doe@example.com\",\n  \"password\": \"Password123!\",\n  \"phone\": \"+1234567890\",\n  \"address\": {\n    \"street\": \"123 Main St\",\n    \"city\": \"New York\",\n    \"state\": \"NY\",\n    \"zipCode\": \"10001\",\n    \"country\": \"USA\"\n  },\n  \"role\": \"sender\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/auth/register",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"jane.receiver@gmail.com\",\n  \"password\": \"Receiver123!\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/auth/login",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Sender Login",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"john.doe@example.com\",\n  \"password\": \"NewPassword123!\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8000/api/v1/auth/login",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"v1",
+										"auth",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "http://localhost:5173"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhhNDhiMTVkY2U4MDM1MjU4YTY3MDciLCJlbWFpbCI6ImpvaG4uZG9lQGV4YW1wbGUuY29tIiwicm9sZSI6InNlbmRlciIsImlhdCI6MTc1NDA1MDQ4NSwiZXhwIjoxNzU0MTM2ODg1fQ.8BldNd_soyoSOovThD9xFqNBhgkgWL4CWcNKDnl2ZQI; Path=/; HttpOnly; SameSite=None"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhhNDhiMTVkY2U4MDM1MjU4YTY3MDciLCJlbWFpbCI6ImpvaG4uZG9lQGV4YW1wbGUuY29tIiwicm9sZSI6InNlbmRlciIsImlhdCI6MTc1NDA1MDQ4NSwiZXhwIjoxNzU0NjU1Mjg1fQ.rd1BstGdh-w6ynZUFChvxQpN2Udgs00xc1Frt3ceRCk; Path=/; HttpOnly; SameSite=None"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "987"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"3db-Yp5mI3gm+cyV1izboFC/yaT9MjQ\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 01 Aug 2025 12:14:45 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"statusCode\": 200,\n    \"success\": true,\n    \"message\": \"User logged in successfully\",\n    \"data\": {\n        \"user\": {\n            \"_id\": \"688a48b15dce8035258a6707\",\n            \"name\": \"John Updated\",\n            \"email\": \"john.doe@example.com\",\n            \"phone\": \"+1234567899\",\n            \"address\": {\n                \"street\": \"456 Updated St\",\n                \"city\": \"Updated City\",\n                \"state\": \"UC\",\n                \"zipCode\": \"54321\",\n                \"country\": \"USA\"\n            },\n            \"role\": \"sender\",\n            \"isBlocked\": false,\n            \"isVerified\": true,\n            \"isActive\": \"active\",\n            \"isDeleted\": false,\n            \"createdAt\": \"2025-07-30T16:30:41.929Z\",\n            \"updatedAt\": \"2025-08-01T12:07:12.517Z\"\n        },\n        \"accessToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhhNDhiMTVkY2U4MDM1MjU4YTY3MDciLCJlbWFpbCI6ImpvaG4uZG9lQGV4YW1wbGUuY29tIiwicm9sZSI6InNlbmRlciIsImlhdCI6MTc1NDA1MDQ4NSwiZXhwIjoxNzU0MTM2ODg1fQ.8BldNd_soyoSOovThD9xFqNBhgkgWL4CWcNKDnl2ZQI\",\n        \"refreshToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhhNDhiMTVkY2U4MDM1MjU4YTY3MDciLCJlbWFpbCI6ImpvaG4uZG9lQGV4YW1wbGUuY29tIiwicm9sZSI6InNlbmRlciIsImlhdCI6MTc1NDA1MDQ4NSwiZXhwIjoxNzU0NjU1Mjg1fQ.rd1BstGdh-w6ynZUFChvxQpN2Udgs00xc1Frt3ceRCk\"\n    }\n}"
+						},
+						{
+							"name": "Receiver Login",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"jane.receiver@gmail.com\",\n  \"password\": \"Receiver123!\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/auth/login",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"auth",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "http://localhost:5173"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhhNDg5ODVkY2U4MDM1MjU4YTY3MDQiLCJlbWFpbCI6ImphbmUucmVjZWl2ZXJAZ21haWwuY29tIiwicm9sZSI6InJlY2VpdmVyIiwiaWF0IjoxNzU0MDUzOTc4LCJleHAiOjE3NTQxNDAzNzh9.4yzEHiMBgUQCwYrOM0TUhgEI3UTRb2iG7Cyc14supr8; Path=/; HttpOnly; SameSite=None"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhhNDg5ODVkY2U4MDM1MjU4YTY3MDQiLCJlbWFpbCI6ImphbmUucmVjZWl2ZXJAZ21haWwuY29tIiwicm9sZSI6InJlY2VpdmVyIiwiaWF0IjoxNzU0MDUzOTc4LCJleHAiOjE3NTQ2NTg3Nzh9.gGwtAqnLN4XIq3KQ3U729McmDeoOiM2YKmhDHqLIjX4; Path=/; HttpOnly; SameSite=None"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1007"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"3ef-ZYebI1AsxU8eCfbnETMoCyW0Ki0\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 01 Aug 2025 13:12:58 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"statusCode\": 200,\n    \"success\": true,\n    \"message\": \"User logged in successfully\",\n    \"data\": {\n        \"user\": {\n            \"_id\": \"688a48985dce8035258a6704\",\n            \"name\": \"Jane Receiver\",\n            \"email\": \"jane.receiver@gmail.com\",\n            \"phone\": \"+1122334455\",\n            \"address\": {\n                \"street\": \"789 Receiver Rd\",\n                \"city\": \"Receiver City\",\n                \"state\": \"RC\",\n                \"zipCode\": \"98765\",\n                \"country\": \"USA\"\n            },\n            \"role\": \"receiver\",\n            \"isBlocked\": false,\n            \"isVerified\": true,\n            \"isActive\": \"active\",\n            \"isDeleted\": false,\n            \"createdAt\": \"2025-07-30T16:30:16.040Z\",\n            \"updatedAt\": \"2025-07-30T16:30:16.040Z\"\n        },\n        \"accessToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhhNDg5ODVkY2U4MDM1MjU4YTY3MDQiLCJlbWFpbCI6ImphbmUucmVjZWl2ZXJAZ21haWwuY29tIiwicm9sZSI6InJlY2VpdmVyIiwiaWF0IjoxNzU0MDUzOTc4LCJleHAiOjE3NTQxNDAzNzh9.4yzEHiMBgUQCwYrOM0TUhgEI3UTRb2iG7Cyc14supr8\",\n        \"refreshToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhhNDg5ODVkY2U4MDM1MjU4YTY3MDQiLCJlbWFpbCI6ImphbmUucmVjZWl2ZXJAZ21haWwuY29tIiwicm9sZSI6InJlY2VpdmVyIiwiaWF0IjoxNzU0MDUzOTc4LCJleHAiOjE3NTQ2NTg3Nzh9.gGwtAqnLN4XIq3KQ3U729McmDeoOiM2YKmhDHqLIjX4\"\n    }\n}"
+						},
+						{
+							"name": "Admin Login",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"admin@dropollo.com\",\n  \"password\": \"Admin123!\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/auth/login",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"auth",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "http://localhost:5173"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhhNDgzYTVkY2U4MDM1MjU4YTY2ZmUiLCJlbWFpbCI6ImFkbWluQGRyb3BvbGxvLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc1NDA1MDY0MCwiZXhwIjoxNzU0MTM3MDQwfQ.vV3K67ULiEhcB70kB5AuZgIfbPZbPW25wrsJg0K_cKs; Path=/; HttpOnly; SameSite=None"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhhNDgzYTVkY2U4MDM1MjU4YTY2ZmUiLCJlbWFpbCI6ImFkbWluQGRyb3BvbGxvLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc1NDA1MDY0MCwiZXhwIjoxNzU0NjU1NDQwfQ.rNG_avZ4BzLIzy4Smkd4UFLnbhCr8sSaTeHZ8nMmUv4; Path=/; HttpOnly; SameSite=None"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "970"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"3ca-rD5Ii6xTKZcCdG84XI/WsliVmIA\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 01 Aug 2025 12:17:20 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"statusCode\": 200,\n    \"success\": true,\n    \"message\": \"User logged in successfully\",\n    \"data\": {\n        \"user\": {\n            \"_id\": \"688a483a5dce8035258a66fe\",\n            \"name\": \"Admin User\",\n            \"email\": \"admin@dropollo.com\",\n            \"phone\": \"+1234567890\",\n            \"address\": {\n                \"street\": \"123 Admin St\",\n                \"city\": \"Admin City\",\n                \"state\": \"AC\",\n                \"zipCode\": \"12345\",\n                \"country\": \"USA\"\n            },\n            \"role\": \"admin\",\n            \"isBlocked\": false,\n            \"isVerified\": true,\n            \"isActive\": \"active\",\n            \"isDeleted\": false,\n            \"createdAt\": \"2025-07-30T16:28:42.743Z\",\n            \"updatedAt\": \"2025-07-30T16:28:42.743Z\"\n        },\n        \"accessToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhhNDgzYTVkY2U4MDM1MjU4YTY2ZmUiLCJlbWFpbCI6ImFkbWluQGRyb3BvbGxvLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc1NDA1MDY0MCwiZXhwIjoxNzU0MTM3MDQwfQ.vV3K67ULiEhcB70kB5AuZgIfbPZbPW25wrsJg0K_cKs\",\n        \"refreshToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhhNDgzYTVkY2U4MDM1MjU4YTY2ZmUiLCJlbWFpbCI6ImFkbWluQGRyb3BvbGxvLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc1NDA1MDY0MCwiZXhwIjoxNzU0NjU1NDQwfQ.rNG_avZ4BzLIzy4Smkd4UFLnbhCr8sSaTeHZ8nMmUv4\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Me",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhhNDhiMTVkY2U4MDM1MjU4YTY3MDciLCJlbWFpbCI6ImpvaG4uZG9lQGV4YW1wbGUuY29tIiwicm9sZSI6InNlbmRlciIsImlhdCI6MTc1NDA0OTg3NCwiZXhwIjoxNzU0MTM2Mjc0fQ.eyOAgLlXgOiq4wqMT-84EkBDWEt822-jgnCAHkMFjKs",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"john.doe@example.com\",\n  \"password\": \"Password123!\"\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/auth/me",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"auth",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Profile",
+					"request": {
+						"auth": {
+							"type": "bearer"
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhhNDhiMTVkY2U4MDM1MjU4YTY3MDciLCJlbWFpbCI6ImpvaG4uZG9lQGV4YW1wbGUuY29tIiwicm9sZSI6InNlbmRlciIsImlhdCI6MTc1NDA0OTg3NCwiZXhwIjoxNzU0MTM2Mjc0fQ.eyOAgLlXgOiq4wqMT-84EkBDWEt822-jgnCAHkMFjKs",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"John Sender\",\n  \"phone\": \"+1234567899\",\n  \"address\": {\n    \"street\": \"456 Updated St\",\n    \"city\": \"Updated City\",\n    \"state\": \"UC\",\n    \"zipCode\": \"54321\",\n    \"country\": \"USA\"\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/auth/profile",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"auth",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change Password",
+					"request": {
+						"auth": {
+							"type": "bearer"
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhhNDhiMTVkY2U4MDM1MjU4YTY3MDciLCJlbWFpbCI6ImpvaG4uZG9lQGV4YW1wbGUuY29tIiwicm9sZSI6InNlbmRlciIsImlhdCI6MTc1NDA0OTg3NCwiZXhwIjoxNzU0MTM2Mjc0fQ.eyOAgLlXgOiq4wqMT-84EkBDWEt822-jgnCAHkMFjKs",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"currentPassword\": \"Password123!\",\n  \"newPassword\": \"NewPassword123!\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/auth/change-password",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"auth",
+								"change-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh Token",
+					"request": {
+						"auth": {
+							"type": "bearer"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhhNDhiMTVkY2U4MDM1MjU4YTY3MDciLCJlbWFpbCI6ImpvaG4uZG9lQGV4YW1wbGUuY29tIiwicm9sZSI6InNlbmRlciIsImlhdCI6MTc1NDA1MDEwNywiZXhwIjoxNzU0MTM2NTA3fQ.RazeK1qnUXiCVtfHq5KQn2NseEtyT_qqGySZAKgF_UM",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"refreshToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhhNDhiMTVkY2U4MDM1MjU4YTY3MDciLCJlbWFpbCI6ImpvaG4uZG9lQGV4YW1wbGUuY29tIiwicm9sZSI6InNlbmRlciIsImlhdCI6MTc1NDA1MDEwNywiZXhwIjoxNzU0NjU0OTA3fQ.DEwC1PslD5W5ZK9fxIUv5rFYEvaNXIw4N3OJQ0ViqtI\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/auth/refresh-token",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"auth",
+								"refresh-token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User Logout",
+					"request": {
+						"auth": {
+							"type": "bearer"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhhNDhiMTVkY2U4MDM1MjU4YTY3MDciLCJlbWFpbCI6ImpvaG4uZG9lQGV4YW1wbGUuY29tIiwicm9sZSI6InNlbmRlciIsImlhdCI6MTc1NDA1MDEwNywiZXhwIjoxNzU0MTM2NTA3fQ.RazeK1qnUXiCVtfHq5KQn2NseEtyT_qqGySZAKgF_UM",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"refreshToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhhNDhiMTVkY2U4MDM1MjU4YTY3MDciLCJlbWFpbCI6ImpvaG4uZG9lQGV4YW1wbGUuY29tIiwicm9sZSI6InNlbmRlciIsImlhdCI6MTc1NDA1MDEwNywiZXhwIjoxNzU0NjU0OTA3fQ.DEwC1PslD5W5ZK9fxIUv5rFYEvaNXIw4N3OJQ0ViqtI\"\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/auth/logout",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"auth",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Get All Users (Admin)",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhhNDgzYTVkY2U4MDM1MjU4YTY2ZmUiLCJlbWFpbCI6ImFkbWluQGRyb3BvbGxvLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc1NDA1MDY0MCwiZXhwIjoxNzU0MTM3MDQwfQ.vV3K67ULiEhcB70kB5AuZgIfbPZbPW25wrsJg0K_cKs",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"refreshToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhhNDhiMTVkY2U4MDM1MjU4YTY3MDciLCJlbWFpbCI6ImpvaG4uZG9lQGV4YW1wbGUuY29tIiwicm9sZSI6InNlbmRlciIsImlhdCI6MTc1NDA1MDEwNywiZXhwIjoxNzU0NjU0OTA3fQ.DEwC1PslD5W5ZK9fxIUv5rFYEvaNXIw4N3OJQ0ViqtI\"\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/user",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User by ID (Admin)",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhhNDgzYTVkY2U4MDM1MjU4YTY2ZmUiLCJlbWFpbCI6ImFkbWluQGRyb3BvbGxvLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc1NDA1MDY0MCwiZXhwIjoxNzU0MTM3MDQwfQ.vV3K67ULiEhcB70kB5AuZgIfbPZbPW25wrsJg0K_cKs",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"refreshToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhhNDhiMTVkY2U4MDM1MjU4YTY3MDciLCJlbWFpbCI6ImpvaG4uZG9lQGV4YW1wbGUuY29tIiwicm9sZSI6InNlbmRlciIsImlhdCI6MTc1NDA1MDEwNywiZXhwIjoxNzU0NjU0OTA3fQ.DEwC1PslD5W5ZK9fxIUv5rFYEvaNXIw4N3OJQ0ViqtI\"\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/user/688c6568031f00f94aca5032",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"user",
+								"688c6568031f00f94aca5032"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User Stats (Admin)",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhhNDgzYTVkY2U4MDM1MjU4YTY2ZmUiLCJlbWFpbCI6ImFkbWluQGRyb3BvbGxvLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc1NDA1MDY0MCwiZXhwIjoxNzU0MTM3MDQwfQ.vV3K67ULiEhcB70kB5AuZgIfbPZbPW25wrsJg0K_cKs",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"refreshToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhhNDhiMTVkY2U4MDM1MjU4YTY3MDciLCJlbWFpbCI6ImpvaG4uZG9lQGV4YW1wbGUuY29tIiwicm9sZSI6InNlbmRlciIsImlhdCI6MTc1NDA1MDEwNywiZXhwIjoxNzU0NjU0OTA3fQ.DEwC1PslD5W5ZK9fxIUv5rFYEvaNXIw4N3OJQ0ViqtI\"\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/user/stats",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"user",
+								"stats"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User Role (Admin)",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhhNDgzYTVkY2U4MDM1MjU4YTY2ZmUiLCJlbWFpbCI6ImFkbWluQGRyb3BvbGxvLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc1NDA1MDY0MCwiZXhwIjoxNzU0MTM3MDQwfQ.vV3K67ULiEhcB70kB5AuZgIfbPZbPW25wrsJg0K_cKs",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"role\": \"receiver\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/user/688c6568031f00f94aca5032/role",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"user",
+								"688c6568031f00f94aca5032",
+								"role"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Block/Unblock User (Admin)",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhhNDgzYTVkY2U4MDM1MjU4YTY2ZmUiLCJlbWFpbCI6ImFkbWluQGRyb3BvbGxvLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc1NDA1MDY0MCwiZXhwIjoxNzU0MTM3MDQwfQ.vV3K67ULiEhcB70kB5AuZgIfbPZbPW25wrsJg0K_cKs",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"isBlocked\": true,\n  \"reason\": \"Violation of terms of service\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/user/688c6568031f00f94aca5032/block",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"user",
+								"688c6568031f00f94aca5032",
+								"block"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User (Admin)",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhhNDgzYTVkY2U4MDM1MjU4YTY2ZmUiLCJlbWFpbCI6ImFkbWluQGRyb3BvbGxvLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc1NDA1MDY0MCwiZXhwIjoxNzU0MTM3MDQwfQ.vV3K67ULiEhcB70kB5AuZgIfbPZbPW25wrsJg0K_cKs",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"isBlocked\": true,\n  \"reason\": \"Violation of terms of service\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/user/688c6568031f00f94aca5032",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"user",
+								"688c6568031f00f94aca5032"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User Profile Me",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhhNDgzYTVkY2U4MDM1MjU4YTY2ZmUiLCJlbWFpbCI6ImFkbWluQGRyb3BvbGxvLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc1NDA1MDY0MCwiZXhwIjoxNzU0MTM3MDQwfQ.vV3K67ULiEhcB70kB5AuZgIfbPZbPW25wrsJg0K_cKs",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"isBlocked\": true,\n  \"reason\": \"Violation of terms of service\"\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/user/profile/me",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"user",
+								"profile",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User Update Profile",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhhNDhiMTVkY2U4MDM1MjU4YTY3MDciLCJlbWFpbCI6ImpvaG4uZG9lQGV4YW1wbGUuY29tIiwicm9sZSI6InNlbmRlciIsImlhdCI6MTc1NDA1NTI0MiwiZXhwIjoxNzU0MTQxNjQyfQ.ecHlSkddlPATlZFIU-cLzmkXUbocqauQObXcNAYG3AE",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Updated Admin\",\n  \"phone\": \"+1987654321\",\n  \"address\": {\n    \"street\": \"New Street 123\",\n    \"city\": \"New City\",\n    \"state\": \"NS\",\n    \"zipCode\": \"67890\",\n    \"country\": \"USA\"\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/user/profile/update",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"user",
+								"profile",
+								"update"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Parcel",
+			"item": [
+				{
+					"name": "Track Parcel",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhhNDgzYTVkY2U4MDM1MjU4YTY2ZmUiLCJlbWFpbCI6ImFkbWluQGRyb3BvbGxvLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc1NDA1MDY0MCwiZXhwIjoxNzU0MTM3MDQwfQ.vV3K67ULiEhcB70kB5AuZgIfbPZbPW25wrsJg0K_cKs",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/parcel/track/TRK-20250801-971415",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"parcel",
+								"track",
+								"TRK-20250801-971415"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Parcel (Sender)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhhNDhiMTVkY2U4MDM1MjU4YTY3MDciLCJlbWFpbCI6ImpvaG4uZG9lQGV4YW1wbGUuY29tIiwicm9sZSI6InNlbmRlciIsImlhdCI6MTc1NDA1MDQ4NSwiZXhwIjoxNzU0MTM2ODg1fQ.8BldNd_soyoSOovThD9xFqNBhgkgWL4CWcNKDnl2ZQI",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"receiver\": {\n    \"name\": \"Jane Receiver\",\n    \"email\": \"jane.receiver@gmail.com\",\n    \"phone\": \"+1122334455\",\n    \"address\": {\n      \"street\": \"789 Receiver Rd\",\n      \"city\": \"Receiver City\",\n      \"state\": \"RC\",\n      \"zipCode\": \"98765\",\n      \"country\": \"USA\"\n    }\n  },\n  \"parcelDetails\": {\n    \"type\": \"electronics\",\n    \"weight\": 2.5,\n    \"dimensions\": {\n      \"length\": 30,\n      \"width\": 20,\n      \"height\": 10\n    },\n    \"description\": \"Laptop computer\",\n    \"value\": 1200\n  },\n  \"deliveryInfo\": {\n    \"preferredDeliveryDate\": \"2025-10-20T09:00:00.000Z\",\n    \"deliveryInstructions\": \"Ring the doorbell, apartment 3B\",\n    \"urgency\": \"express\"\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/parcel",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"parcel"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Parcel by ID (Owner/Admin)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhhNDgzYTVkY2U4MDM1MjU4YTY2ZmUiLCJlbWFpbCI6ImFkbWluQGRyb3BvbGxvLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc1NDA1ODcxMywiZXhwIjoxNzU0MTQ1MTEzfQ.Dz3SvDr3_pAXOPlUqQaXT1WZRwSx4O6gjmhqEZaCe64",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL}}/parcel/688cde4785bdbda1002e8101",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"parcel",
+								"688cde4785bdbda1002e8101"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "10",
+									"disabled": true
+								},
+								{
+									"key": "deliveryInfo.urgency",
+									"value": "express",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Parcel Status History (Owner/Admin)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhhNDgzYTVkY2U4MDM1MjU4YTY2ZmUiLCJlbWFpbCI6ImFkbWluQGRyb3BvbGxvLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc1NDA1ODcxMywiZXhwIjoxNzU0MTQ1MTEzfQ.Dz3SvDr3_pAXOPlUqQaXT1WZRwSx4O6gjmhqEZaCe64",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL}}/parcel/688cde4785bdbda1002e8101/status-history",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"parcel",
+								"688cde4785bdbda1002e8101",
+								"status-history"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "10",
+									"disabled": true
+								},
+								{
+									"key": "deliveryInfo.urgency",
+									"value": "express",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get My Sent Parcels (Sender)",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhhNDhiMTVkY2U4MDM1MjU4YTY3MDciLCJlbWFpbCI6ImpvaG4uZG9lQGV4YW1wbGUuY29tIiwicm9sZSI6InNlbmRlciIsImlhdCI6MTc1NDA1NTI0MiwiZXhwIjoxNzU0MTQxNjQyfQ.ecHlSkddlPATlZFIU-cLzmkXUbocqauQObXcNAYG3AE",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/parcel/my-sent?page=1&limit=10&currentStatus=requested&sort=-createdAt",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"parcel",
+								"my-sent"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "currentStatus",
+									"value": "requested"
+								},
+								{
+									"key": "sort",
+									"value": "-createdAt"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Parcel (Sender)",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhhNDhiMTVkY2U4MDM1MjU4YTY3MDciLCJlbWFpbCI6ImpvaG4uZG9lQGV4YW1wbGUuY29tIiwicm9sZSI6InNlbmRlciIsImlhdCI6MTc1NDA1NTI0MiwiZXhwIjoxNzU0MTQxNjQyfQ.ecHlSkddlPATlZFIU-cLzmkXUbocqauQObXcNAYG3AE",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"receiver\": {\n    \"phone\": \"+1122334456\"\n  },\n  \"deliveryInfo\": {\n    \"deliveryInstructions\": \"Updated instructions: Leave at reception\",\n    \"urgency\": \"urgent\"\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/parcel/688cbe22ed85b13b7f04ae95",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"parcel",
+								"688cbe22ed85b13b7f04ae95"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cancel Parcel (Sender)",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhhNDhiMTVkY2U4MDM1MjU4YTY3MDciLCJlbWFpbCI6ImpvaG4uZG9lQGV4YW1wbGUuY29tIiwicm9sZSI6InNlbmRlciIsImlhdCI6MTc1NDA1NTI0MiwiZXhwIjoxNzU0MTQxNjQyfQ.ecHlSkddlPATlZFIU-cLzmkXUbocqauQObXcNAYG3AE",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"reason\": \"Change of plans, no longer needed\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/parcel/688cbe22ed85b13b7f04ae95/cancel",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"parcel",
+								"688cbe22ed85b13b7f04ae95",
+								"cancel"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get My Received Parcels (Receiver)",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhhNDg5ODVkY2U4MDM1MjU4YTY3MDQiLCJlbWFpbCI6ImphbmUucmVjZWl2ZXJAZ21haWwuY29tIiwicm9sZSI6InJlY2VpdmVyIiwiaWF0IjoxNzU0MDU4MDg2LCJleHAiOjE3NTQxNDQ0ODZ9.Hjvji3knQEVvAT6epRtlQJcNnaPyzP54hhgBZJ5NnMg",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"reason\": \"Change of plans, no longer needed\"\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/parcel/my-received",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"parcel",
+								"my-received"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Confirm Delivery (Receiver)",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhhNDg5ODVkY2U4MDM1MjU4YTY3MDQiLCJlbWFpbCI6ImphbmUucmVjZWl2ZXJAZ21haWwuY29tIiwicm9sZSI6InJlY2VpdmVyIiwiaWF0IjoxNzU0MDU4MDg2LCJleHAiOjE3NTQxNDQ0ODZ9.Hjvji3knQEVvAT6epRtlQJcNnaPyzP54hhgBZJ5NnMg",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"confirmationCode\": \"DEL123\",\n  \"note\": \"Package received in good condition\",\n  \"rating\": 5\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/parcel/688cce4579fb2e9b02f5899f/confirm-delivery",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"parcel",
+								"688cce4579fb2e9b02f5899f",
+								"confirm-delivery"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Delivery History (Receiver)",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhhNDg5ODVkY2U4MDM1MjU4YTY3MDQiLCJlbWFpbCI6ImphbmUucmVjZWl2ZXJAZ21haWwuY29tIiwicm9sZSI6InJlY2VpdmVyIiwiaWF0IjoxNzU0MDU4MDg2LCJleHAiOjE3NTQxNDQ0ODZ9.Hjvji3knQEVvAT6epRtlQJcNnaPyzP54hhgBZJ5NnMg",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"reason\": \"Change of plans, no longer needed\"\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/parcel/delivery-history",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"parcel",
+								"delivery-history"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Parcels (Admin)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhhNDgzYTVkY2U4MDM1MjU4YTY2ZmUiLCJlbWFpbCI6ImFkbWluQGRyb3BvbGxvLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc1NDA1ODcxMywiZXhwIjoxNzU0MTQ1MTEzfQ.Dz3SvDr3_pAXOPlUqQaXT1WZRwSx4O6gjmhqEZaCe64",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL}}/parcel",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"parcel"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "10",
+									"disabled": true
+								},
+								{
+									"key": "deliveryInfo.urgency",
+									"value": "express",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Parcel Status (Admin)",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhhNDgzYTVkY2U4MDM1MjU4YTY2ZmUiLCJlbWFpbCI6ImFkbWluQGRyb3BvbGxvLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc1NDA1ODcxMywiZXhwIjoxNzU0MTQ1MTEzfQ.Dz3SvDr3_pAXOPlUqQaXT1WZRwSx4O6gjmhqEZaCe64",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "// {\n//      \"status\": \"approved\"  // if currently \"requested\"\n//    }\n   \n{\n    \"status\": \"picked_up\",\n    \"location\": \"Transit Hub - Downtown\",\n    \"note\": \"Package picked up by delivery personnel\"\n    }\n   \n// {\n//      \"status\": \"in_transit\"  // if currently \"picked_up\"  \n//    }\n   \n// {\n//      \"status\": \"out_for_delivery\"  // if currently \"in_transit\"\n//    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/parcel/688cde4785bdbda1002e8101/status",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"parcel",
+								"688cde4785bdbda1002e8101",
+								"status"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "10",
+									"disabled": true
+								},
+								{
+									"key": "deliveryInfo.urgency",
+									"value": "express",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Block/Unblock Parcel (Admin)",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhhNDgzYTVkY2U4MDM1MjU4YTY2ZmUiLCJlbWFpbCI6ImFkbWluQGRyb3BvbGxvLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc1NDA1ODcxMywiZXhwIjoxNzU0MTQ1MTEzfQ.Dz3SvDr3_pAXOPlUqQaXT1WZRwSx4O6gjmhqEZaCe64",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"isBlocked\": false,\n  \"reason\": \"Revoked the blocking\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/parcel/688cce4579fb2e9b02f5899f/block",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"parcel",
+								"688cce4579fb2e9b02f5899f",
+								"block"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Assign Delivery Personnel (Admin)",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhhNDgzYTVkY2U4MDM1MjU4YTY2ZmUiLCJlbWFpbCI6ImFkbWluQGRyb3BvbGxvLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc1NDA1ODcxMywiZXhwIjoxNzU0MTQ1MTEzfQ.Dz3SvDr3_pAXOPlUqQaXT1WZRwSx4O6gjmhqEZaCe64",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"deliveryPersonnel\": {\n    \"name\": \"John Doe\",\n    \"email\": \"john@delivery.com\", \n    \"phone\": \"+1234567890\",\n    \"employeeId\": \"EMP001\",\n    \"vehicleInfo\": {\n      \"type\": \"Motorcycle\",\n      \"plateNumber\": \"ABC123\"\n    }\n  },\n  \"note\": \"Assigned to John Delivery for express route\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/parcel/688cce4579fb2e9b02f5899f/assign",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"parcel",
+								"688cce4579fb2e9b02f5899f",
+								"assign"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Parcel Statistics (Admin)",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhhNDgzYTVkY2U4MDM1MjU4YTY2ZmUiLCJlbWFpbCI6ImFkbWluQGRyb3BvbGxvLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc1NDA1ODcxMywiZXhwIjoxNzU0MTQ1MTEzfQ.Dz3SvDr3_pAXOPlUqQaXT1WZRwSx4O6gjmhqEZaCe64",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"deliveryPersonnel\": {\n    \"name\": \"John Doe\",\n    \"email\": \"john@delivery.com\", \n    \"phone\": \"+1234567890\",\n    \"employeeId\": \"EMP001\",\n    \"vehicleInfo\": {\n      \"type\": \"Motorcycle\",\n      \"plateNumber\": \"ABC123\"\n    }\n  },\n  \"note\": \"Assigned to John Delivery for express route\"\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/parcel/stats",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"parcel",
+								"stats"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Parcel (Admin)",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhhNDgzYTVkY2U4MDM1MjU4YTY2ZmUiLCJlbWFpbCI6ImFkbWluQGRyb3BvbGxvLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc1NDA1ODcxMywiZXhwIjoxNzU0MTQ1MTEzfQ.Dz3SvDr3_pAXOPlUqQaXT1WZRwSx4O6gjmhqEZaCe64",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"deliveryPersonnel\": {\n    \"name\": \"John Doe\",\n    \"email\": \"john@delivery.com\", \n    \"phone\": \"+1234567890\",\n    \"employeeId\": \"EMP001\",\n    \"vehicleInfo\": {\n      \"type\": \"Motorcycle\",\n      \"plateNumber\": \"ABC123\"\n    }\n  },\n  \"note\": \"Assigned to John Delivery for express route\"\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/parcel/688cce4579fb2e9b02f5899f",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"parcel",
+								"688cce4579fb2e9b02f5899f"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Not Found",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhhNDgzYTVkY2U4MDM1MjU4YTY2ZmUiLCJlbWFpbCI6ImFkbWluQGRyb3BvbGxvLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc1NDA1MDY0MCwiZXhwIjoxNzU0MTM3MDQwfQ.vV3K67ULiEhcB70kB5AuZgIfbPZbPW25wrsJg0K_cKs",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"Updated Admin\",\n  \"phone\": \"+1987654321\",\n  \"address\": {\n    \"street\": \"New Street 123\",\n    \"city\": \"New City\",\n    \"state\": \"NS\",\n    \"zipCode\": \"67890\",\n    \"country\": \"USA\"\n  }\n}"
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/not-found",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"not-found"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Health",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john.doe@example.com\",\n  \"password\": \"Password123!\",\n  \"phone\": \"+1234567890\",\n  \"address\": {\n    \"street\": \"123 Main St\",\n    \"city\": \"New York\",\n    \"state\": \"NY\",\n    \"zipCode\": \"10001\",\n    \"country\": \"USA\"\n  },\n  \"role\": \"sender\"\n}"
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/health",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"health"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "jwt",
+		"jwt": [
+			{
+				"key": "algorithm",
+				"value": "HS256",
+				"type": "string"
+			},
+			{
+				"key": "isSecretBase64Encoded",
+				"value": false,
+				"type": "boolean"
+			},
+			{
+				"key": "payload",
+				"value": "{}",
+				"type": "string"
+			},
+			{
+				"key": "addTokenTo",
+				"value": "header",
+				"type": "string"
+			},
+			{
+				"key": "headerPrefix",
+				"value": "Bearer",
+				"type": "string"
+			},
+			{
+				"key": "queryParamKey",
+				"value": "token",
+				"type": "string"
+			},
+			{
+				"key": "header",
+				"value": "{}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
