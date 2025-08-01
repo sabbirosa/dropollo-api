@@ -3,15 +3,15 @@ import { checkAuth } from "../../middlewares/checkAuth";
 import { validateRequest } from "../../middlewares/validateRequest";
 import { ParcelController } from "./parcel.controller";
 import {
-    assignDeliveryPersonnelValidation,
-    blockParcelValidation,
-    confirmDeliveryValidation,
-    createParcelValidation,
-    getParcelQueryValidation,
-    parcelIdValidation,
-    trackParcelValidation,
-    updateParcelStatusValidation,
-    updateParcelValidation,
+  assignDeliveryPersonnelValidation,
+  blockParcelValidation,
+  confirmDeliveryValidation,
+  createParcelValidation,
+  getParcelQueryValidation,
+  parcelIdValidation,
+  trackParcelValidation,
+  updateParcelStatusValidation,
+  updateParcelValidation,
 } from "./parcel.validation";
 
 const router = Router();
@@ -108,11 +108,7 @@ router.put(
   ParcelController.assignDeliveryPersonnel
 );
 
-router.get(
-  "/stats",
-  checkAuth("admin"),
-  ParcelController.getParcelStats
-);
+router.get("/stats", checkAuth("admin"), ParcelController.getParcelStats);
 
 router.delete(
   "/:id",

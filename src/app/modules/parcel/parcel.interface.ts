@@ -1,15 +1,15 @@
-import { ObjectId } from 'mongoose';
+import { ObjectId } from "mongoose";
 
 export enum ParcelStatus {
-  REQUESTED = 'requested',
-  APPROVED = 'approved',
-  PICKED_UP = 'picked_up',
-  IN_TRANSIT = 'in_transit',
-  OUT_FOR_DELIVERY = 'out_for_delivery',
-  DELIVERED = 'delivered',
-  CANCELLED = 'cancelled',
-  RETURNED = 'returned',
-  FAILED_DELIVERY = 'failed_delivery'
+  REQUESTED = "requested",
+  APPROVED = "approved",
+  PICKED_UP = "picked_up",
+  IN_TRANSIT = "in_transit",
+  OUT_FOR_DELIVERY = "out_for_delivery",
+  DELIVERED = "delivered",
+  CANCELLED = "cancelled",
+  RETURNED = "returned",
+  FAILED_DELIVERY = "failed_delivery",
 }
 
 export interface IStatusLog {
@@ -34,7 +34,7 @@ export interface IParcelReceiver {
 }
 
 export interface IParcelDetails {
-  type: 'document' | 'package' | 'fragile' | 'electronics' | 'other';
+  type: "document" | "package" | "fragile" | "electronics" | "other";
   weight: number; // in kg
   dimensions?: {
     length: number;
@@ -48,7 +48,7 @@ export interface IParcelDetails {
 export interface IDeliveryInfo {
   preferredDeliveryDate?: Date;
   deliveryInstructions?: string;
-  urgency: 'standard' | 'express' | 'urgent';
+  urgency: "standard" | "express" | "urgent";
 }
 
 export interface IPricing {
@@ -103,5 +103,5 @@ export interface IParcelFilters {
   trackingId?: string;
   startDate?: Date;
   endDate?: Date;
-  urgency?: 'standard' | 'express' | 'urgent';
-} 
+  urgency?: "standard" | "express" | "urgent";
+}

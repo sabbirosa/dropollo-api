@@ -1,15 +1,29 @@
 import { NextFunction, Request, Response } from "express";
-import { ZodObject } from "zod";
+import { ZodSchema } from "zod";
 
 export const validateRequest =
-  (zodSchema: ZodObject) =>
+  (zodSchema: ZodSchema) =>
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      if (req.body.data) {
+      if (req.body && req.body.data) {
         req.body = JSON.parse(req.body.data);
       }
 
-      req.body = await zodSchema.parseAsync(req.body);
+      const validationData = {
+        body: req.body,
+        params: req.params,
+        query: req.query,
+      };
+
+      const validated = (await zodSchema.parseAsync(
+        validationData
+      )) as typeof validationData;
+
+      // Update request object with validated data
+      if (validated.body) req.body = validated.body;
+      if (validated.params) req.params = validated.params;
+      if (validated.query) req.query = validated.query;
+
       next();
     } catch (error) {
       next(error);

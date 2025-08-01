@@ -1,18 +1,20 @@
-import type { Request, Response } from 'express';
-import { StatusCodes } from 'http-status-codes';
-import AppError from '../../errorHelpers/AppError';
-import { catchAsync } from '../../utils/catchAsync';
-import { sendResponse } from '../../utils/sendResponse';
-import { UserService } from './user.service';
+import type { Request, Response } from "express";
+import { StatusCodes } from "http-status-codes";
+import AppError from "../../errorHelpers/AppError";
+import { catchAsync } from "../../utils/catchAsync";
+import { sendResponse } from "../../utils/sendResponse";
+import { UserService } from "./user.service";
 
 // Get all users (Admin only)
 const getAllUsers = catchAsync(async (req: Request, res: Response) => {
-  const result = await UserService.getAllUsers(req.query as Record<string, string>);
+  const result = await UserService.getAllUsers(
+    req.query as Record<string, string>
+  );
 
   sendResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,
-    message: 'Users retrieved successfully',
+    message: "Users retrieved successfully",
     data: result.users,
     meta: result.meta,
   });
@@ -23,15 +25,15 @@ const getUserById = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params;
 
   const user = await UserService.getUserById(id);
-  
+
   if (!user) {
-    throw new AppError(StatusCodes.NOT_FOUND, 'User not found');
+    throw new AppError(StatusCodes.NOT_FOUND, "User not found");
   }
 
   sendResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,
-    message: 'User retrieved successfully',
+    message: "User retrieved successfully",
     data: user,
   });
 });
@@ -39,21 +41,21 @@ const getUserById = catchAsync(async (req: Request, res: Response) => {
 // Get current user profile
 const getMyProfile = catchAsync(async (req: Request, res: Response) => {
   const userId = req.user?.userId;
-  
+
   if (!userId) {
-    throw new AppError(StatusCodes.UNAUTHORIZED, 'User not authenticated');
+    throw new AppError(StatusCodes.UNAUTHORIZED, "User not authenticated");
   }
 
   const user = await UserService.getUserById(userId);
-  
+
   if (!user) {
-    throw new AppError(StatusCodes.NOT_FOUND, 'User profile not found');
+    throw new AppError(StatusCodes.NOT_FOUND, "User profile not found");
   }
 
   sendResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,
-    message: 'Profile retrieved successfully',
+    message: "Profile retrieved successfully",
     data: user,
   });
 });
@@ -64,7 +66,7 @@ const updateProfile = catchAsync(async (req: Request, res: Response) => {
   const updateData = req.body;
 
   if (!userId) {
-    throw new AppError(StatusCodes.UNAUTHORIZED, 'User not authenticated');
+    throw new AppError(StatusCodes.UNAUTHORIZED, "User not authenticated");
   }
 
   const updatedUser = await UserService.updateUser(userId, updateData);
@@ -72,7 +74,7 @@ const updateProfile = catchAsync(async (req: Request, res: Response) => {
   sendResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,
-    message: 'Profile updated successfully',
+    message: "Profile updated successfully",
     data: updatedUser,
   });
 });
@@ -87,7 +89,7 @@ const updateUserRole = catchAsync(async (req: Request, res: Response) => {
   sendResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,
-    message: 'User role updated successfully',
+    message: "User role updated successfully",
     data: updatedUser,
   });
 });
@@ -99,12 +101,12 @@ const blockUnblockUser = catchAsync(async (req: Request, res: Response) => {
 
   // Prevent admin from blocking themselves
   if (req.user?.userId === id && isBlocked) {
-    throw new AppError(StatusCodes.BAD_REQUEST, 'You cannot block yourself');
+    throw new AppError(StatusCodes.BAD_REQUEST, "You cannot block yourself");
   }
 
   const updatedUser = await UserService.blockUnblockUser(id, isBlocked);
 
-  const action = isBlocked ? 'blocked' : 'unblocked';
+  const action = isBlocked ? "blocked" : "unblocked";
   sendResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,
@@ -119,7 +121,7 @@ const changePassword = catchAsync(async (req: Request, res: Response) => {
   const passwordData = req.body;
 
   if (!userId) {
-    throw new AppError(StatusCodes.UNAUTHORIZED, 'User not authenticated');
+    throw new AppError(StatusCodes.UNAUTHORIZED, "User not authenticated");
   }
 
   await UserService.changePassword(userId, passwordData);
@@ -127,7 +129,7 @@ const changePassword = catchAsync(async (req: Request, res: Response) => {
   sendResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,
-    message: 'Password changed successfully',
+    message: "Password changed successfully",
     data: null,
   });
 });
@@ -138,7 +140,7 @@ const deleteUser = catchAsync(async (req: Request, res: Response) => {
 
   // Prevent admin from deleting themselves
   if (req.user?.userId === id) {
-    throw new AppError(StatusCodes.BAD_REQUEST, 'You cannot delete yourself');
+    throw new AppError(StatusCodes.BAD_REQUEST, "You cannot delete yourself");
   }
 
   await UserService.deleteUser(id);
@@ -146,7 +148,7 @@ const deleteUser = catchAsync(async (req: Request, res: Response) => {
   sendResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,
-    message: 'User deleted successfully',
+    message: "User deleted successfully",
     data: null,
   });
 });
@@ -158,7 +160,7 @@ const getUserStats = catchAsync(async (req: Request, res: Response) => {
   sendResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,
-    message: 'User statistics retrieved successfully',
+    message: "User statistics retrieved successfully",
     data: stats,
   });
 });
@@ -173,4 +175,4 @@ export const UserController = {
   changePassword,
   deleteUser,
   getUserStats,
-}; 
+};

@@ -1,9 +1,9 @@
-import type { Request, Response } from 'express';
-import { StatusCodes } from 'http-status-codes';
-import AppError from '../../errorHelpers/AppError';
-import { catchAsync } from '../../utils/catchAsync';
-import { sendResponse } from '../../utils/sendResponse';
-import { ParcelService } from './parcel.service';
+import type { Request, Response } from "express";
+import { StatusCodes } from "http-status-codes";
+import AppError from "../../errorHelpers/AppError";
+import { catchAsync } from "../../utils/catchAsync";
+import { sendResponse } from "../../utils/sendResponse";
+import { ParcelService } from "./parcel.service";
 
 // Create new parcel (Sender only)
 const createParcel = catchAsync(async (req: Request, res: Response) => {
@@ -11,7 +11,7 @@ const createParcel = catchAsync(async (req: Request, res: Response) => {
   const parcelData = req.body;
 
   if (!senderId) {
-    throw new AppError(StatusCodes.UNAUTHORIZED, 'User not authenticated');
+    throw new AppError(StatusCodes.UNAUTHORIZED, "User not authenticated");
   }
 
   const result = await ParcelService.createParcel(senderId, parcelData);
@@ -19,7 +19,7 @@ const createParcel = catchAsync(async (req: Request, res: Response) => {
   sendResponse(res, {
     statusCode: StatusCodes.CREATED,
     success: true,
-    message: 'Parcel created successfully',
+    message: "Parcel created successfully",
     data: result,
   });
 });
@@ -31,7 +31,7 @@ const getParcelById = catchAsync(async (req: Request, res: Response) => {
   const userRole = req.user?.role;
 
   if (!userId || !userRole) {
-    throw new AppError(StatusCodes.UNAUTHORIZED, 'User not authenticated');
+    throw new AppError(StatusCodes.UNAUTHORIZED, "User not authenticated");
   }
 
   const result = await ParcelService.getParcelById(id, userId, userRole);
@@ -39,7 +39,7 @@ const getParcelById = catchAsync(async (req: Request, res: Response) => {
   sendResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,
-    message: 'Parcel retrieved successfully',
+    message: "Parcel retrieved successfully",
     data: result,
   });
 });
@@ -53,19 +53,21 @@ const trackParcel = catchAsync(async (req: Request, res: Response) => {
   sendResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,
-    message: 'Parcel tracked successfully',
+    message: "Parcel tracked successfully",
     data: result,
   });
 });
 
 // Get all parcels with filters (Admin only)
 const getAllParcels = catchAsync(async (req: Request, res: Response) => {
-  const result = await ParcelService.getAllParcels(req.query as Record<string, string>);
+  const result = await ParcelService.getAllParcels(
+    req.query as Record<string, string>
+  );
 
   sendResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,
-    message: 'Parcels retrieved successfully',
+    message: "Parcels retrieved successfully",
     data: result.parcels,
     meta: result.meta,
   });
@@ -76,15 +78,18 @@ const getMySentParcels = catchAsync(async (req: Request, res: Response) => {
   const senderId = req.user?.userId;
 
   if (!senderId) {
-    throw new AppError(StatusCodes.UNAUTHORIZED, 'User not authenticated');
+    throw new AppError(StatusCodes.UNAUTHORIZED, "User not authenticated");
   }
 
-  const result = await ParcelService.getSenderParcels(senderId, req.query as Record<string, string>);
+  const result = await ParcelService.getSenderParcels(
+    senderId,
+    req.query as Record<string, string>
+  );
 
   sendResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,
-    message: 'Sent parcels retrieved successfully',
+    message: "Sent parcels retrieved successfully",
     data: result.parcels,
     meta: result.meta,
   });
@@ -95,15 +100,18 @@ const getMyReceivedParcels = catchAsync(async (req: Request, res: Response) => {
   const userEmail = req.user?.email;
 
   if (!userEmail) {
-    throw new AppError(StatusCodes.UNAUTHORIZED, 'User not authenticated');
+    throw new AppError(StatusCodes.UNAUTHORIZED, "User not authenticated");
   }
 
-  const result = await ParcelService.getReceiverParcels(userEmail, req.query as Record<string, string>);
+  const result = await ParcelService.getReceiverParcels(
+    userEmail,
+    req.query as Record<string, string>
+  );
 
   sendResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,
-    message: 'Received parcels retrieved successfully',
+    message: "Received parcels retrieved successfully",
     data: result.parcels,
     meta: result.meta,
   });
@@ -116,7 +124,7 @@ const updateParcel = catchAsync(async (req: Request, res: Response) => {
   const updateData = req.body;
 
   if (!senderId) {
-    throw new AppError(StatusCodes.UNAUTHORIZED, 'User not authenticated');
+    throw new AppError(StatusCodes.UNAUTHORIZED, "User not authenticated");
   }
 
   const result = await ParcelService.updateParcel(id, senderId, updateData);
@@ -124,7 +132,7 @@ const updateParcel = catchAsync(async (req: Request, res: Response) => {
   sendResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,
-    message: 'Parcel updated successfully',
+    message: "Parcel updated successfully",
     data: result,
   });
 });
@@ -136,15 +144,19 @@ const updateParcelStatus = catchAsync(async (req: Request, res: Response) => {
   const statusUpdate = req.body;
 
   if (!adminId) {
-    throw new AppError(StatusCodes.UNAUTHORIZED, 'User not authenticated');
+    throw new AppError(StatusCodes.UNAUTHORIZED, "User not authenticated");
   }
 
-  const result = await ParcelService.updateParcelStatus(id, adminId, statusUpdate);
+  const result = await ParcelService.updateParcelStatus(
+    id,
+    adminId,
+    statusUpdate
+  );
 
   sendResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,
-    message: 'Parcel status updated successfully',
+    message: "Parcel status updated successfully",
     data: result,
   });
 });
@@ -156,7 +168,7 @@ const cancelParcel = catchAsync(async (req: Request, res: Response) => {
   const { reason } = req.body;
 
   if (!senderId) {
-    throw new AppError(StatusCodes.UNAUTHORIZED, 'User not authenticated');
+    throw new AppError(StatusCodes.UNAUTHORIZED, "User not authenticated");
   }
 
   const result = await ParcelService.cancelParcel(id, senderId, reason);
@@ -164,7 +176,7 @@ const cancelParcel = catchAsync(async (req: Request, res: Response) => {
   sendResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,
-    message: 'Parcel cancelled successfully',
+    message: "Parcel cancelled successfully",
     data: result,
   });
 });
@@ -176,7 +188,7 @@ const confirmDelivery = catchAsync(async (req: Request, res: Response) => {
   const { note } = req.body;
 
   if (!receiverEmail) {
-    throw new AppError(StatusCodes.UNAUTHORIZED, 'User not authenticated');
+    throw new AppError(StatusCodes.UNAUTHORIZED, "User not authenticated");
   }
 
   const result = await ParcelService.confirmDelivery(id, receiverEmail, note);
@@ -184,7 +196,7 @@ const confirmDelivery = catchAsync(async (req: Request, res: Response) => {
   sendResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,
-    message: 'Delivery confirmed successfully',
+    message: "Delivery confirmed successfully",
     data: result,
   });
 });
@@ -196,33 +208,43 @@ const blockParcel = catchAsync(async (req: Request, res: Response) => {
   const { isBlocked, reason } = req.body;
 
   if (!adminId) {
-    throw new AppError(StatusCodes.UNAUTHORIZED, 'User not authenticated');
+    throw new AppError(StatusCodes.UNAUTHORIZED, "User not authenticated");
   }
 
-  const result = await ParcelService.blockParcel(id, adminId, isBlocked, reason);
+  const result = await ParcelService.blockParcel(
+    id,
+    adminId,
+    isBlocked,
+    reason
+  );
 
   sendResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,
-    message: `Parcel ${isBlocked ? 'blocked' : 'unblocked'} successfully`,
+    message: `Parcel ${isBlocked ? "blocked" : "unblocked"} successfully`,
     data: result,
   });
 });
 
 // Assign delivery personnel (Admin only)
-const assignDeliveryPersonnel = catchAsync(async (req: Request, res: Response) => {
-  const { id } = req.params;
-  const { deliveryPersonnelId } = req.body;
+const assignDeliveryPersonnel = catchAsync(
+  async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const { deliveryPersonnelId } = req.body;
 
-  const result = await ParcelService.assignDeliveryPersonnel(id, deliveryPersonnelId);
+    const result = await ParcelService.assignDeliveryPersonnel(
+      id,
+      deliveryPersonnelId
+    );
 
-  sendResponse(res, {
-    statusCode: StatusCodes.OK,
-    success: true,
-    message: 'Delivery personnel assigned successfully',
-    data: result,
-  });
-});
+    sendResponse(res, {
+      statusCode: StatusCodes.OK,
+      success: true,
+      message: "Delivery personnel assigned successfully",
+      data: result,
+    });
+  }
+);
 
 // Delete parcel (Admin only)
 const deleteParcel = catchAsync(async (req: Request, res: Response) => {
@@ -233,7 +255,7 @@ const deleteParcel = catchAsync(async (req: Request, res: Response) => {
   sendResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,
-    message: 'Parcel deleted successfully',
+    message: "Parcel deleted successfully",
     data: null,
   });
 });
@@ -245,51 +267,56 @@ const getParcelStats = catchAsync(async (req: Request, res: Response) => {
   sendResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,
-    message: 'Parcel statistics retrieved successfully',
+    message: "Parcel statistics retrieved successfully",
     data: result,
   });
 });
 
 // Get parcel status history (Owner or Admin only)
-const getParcelStatusHistory = catchAsync(async (req: Request, res: Response) => {
-  const { id } = req.params;
-  const userId = req.user?.userId;
-  const userRole = req.user?.role;
+const getParcelStatusHistory = catchAsync(
+  async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const userId = req.user?.userId;
+    const userRole = req.user?.role;
 
-  if (!userId || !userRole) {
-    throw new AppError(StatusCodes.UNAUTHORIZED, 'User not authenticated');
+    if (!userId || !userRole) {
+      throw new AppError(StatusCodes.UNAUTHORIZED, "User not authenticated");
+    }
+
+    const parcel = await ParcelService.getParcelById(id, userId, userRole);
+
+    sendResponse(res, {
+      statusCode: StatusCodes.OK,
+      success: true,
+      message: "Parcel status history retrieved successfully",
+      data: parcel.statusHistory,
+    });
   }
-
-  const parcel = await ParcelService.getParcelById(id, userId, userRole);
-
-  sendResponse(res, {
-    statusCode: StatusCodes.OK,
-    success: true,
-    message: 'Parcel status history retrieved successfully',
-    data: parcel.statusHistory,
-  });
-});
+);
 
 // Get delivery history for receiver
 const getDeliveryHistory = catchAsync(async (req: Request, res: Response) => {
   const receiverEmail = req.user?.email;
 
   if (!receiverEmail) {
-    throw new AppError(StatusCodes.UNAUTHORIZED, 'User not authenticated');
+    throw new AppError(StatusCodes.UNAUTHORIZED, "User not authenticated");
   }
 
   // Filter for delivered parcels only
   const queryWithDeliveredFilter = {
     ...req.query,
-    status: 'delivered',
+    status: "delivered",
   } as Record<string, string>;
 
-  const result = await ParcelService.getReceiverParcels(receiverEmail, queryWithDeliveredFilter);
+  const result = await ParcelService.getReceiverParcels(
+    receiverEmail,
+    queryWithDeliveredFilter
+  );
 
   sendResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,
-    message: 'Delivery history retrieved successfully',
+    message: "Delivery history retrieved successfully",
     data: result.parcels,
     meta: result.meta,
   });
@@ -312,4 +339,4 @@ export const ParcelController = {
   getParcelStats,
   getParcelStatusHistory,
   getDeliveryHistory,
-}; 
+};

@@ -10,7 +10,7 @@ export interface IRegisterUser {
     zipCode: string;
     country: string;
   };
-  role?: 'admin' | 'sender' | 'receiver';
+  role?: "admin" | "sender" | "receiver";
 }
 
 export interface ILoginUser {
@@ -57,4 +57,4 @@ export interface IUpdateProfile {
     zipCode: string;
     country: string;
   };
-} 
+}

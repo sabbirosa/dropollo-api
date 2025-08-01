@@ -1,7 +1,7 @@
 export enum IsActive {
-  ACTIVE = 'active',
-  BLOCKED = 'blocked',
-  INACTIVE = 'inactive',
+  ACTIVE = "active",
+  BLOCKED = "blocked",
+  INACTIVE = "inactive",
 }
 
 export interface IUserJWT {
@@ -10,4 +10,4 @@ export interface IUserJWT {
   role: string;
   iat?: number;
   exp?: number;
-} 
+}

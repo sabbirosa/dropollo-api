@@ -1,7 +1,8 @@
-import AppError from '../../errorHelpers/AppError';
-import { QueryBuilder } from '../../utils/QueryBuilder';
-import type { IUser } from './user.model';
-import { User } from './user.model';
+import mongoose from "mongoose";
+import AppError from "../../errorHelpers/AppError";
+import { QueryBuilder } from "../../utils/QueryBuilder";
+import type { IUser } from "./user.model";
+import { User } from "./user.model";
 
 interface ICreateUser {
   name: string;
@@ -15,7 +16,7 @@ interface ICreateUser {
     zipCode: string;
     country: string;
   };
-  role?: 'admin' | 'sender' | 'receiver';
+  role?: "admin" | "sender" | "receiver";
 }
 
 interface IUpdateUser {
@@ -44,29 +45,33 @@ interface IUserStats {
   activeUsers: number;
 }
 
-const createUser = async (userData: ICreateUser): Promise<Omit<IUser, 'password'>> => {
+const createUser = async (
+  userData: ICreateUser
+): Promise<Omit<IUser, "password">> => {
   // Check if user already exists
   const existingUser = await User.findOne({ email: userData.email });
   if (existingUser) {
-    throw new AppError(409, 'User with this email already exists');
+    throw new AppError(409, "User with this email already exists");
   }
 
   // Create new user
   const newUser = await User.create(userData);
-  
+
   // Return user without password
   const userObject = newUser.toObject();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { password: _, ...userWithoutPassword } = userObject;
-  
+
   return userWithoutPassword;
 };
 
 const getAllUsers = async (query: Record<string, string>) => {
-  const searchableFields = ['name', 'email', 'phone'];
-  
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const userQuery = new QueryBuilder(User.find().select('-password') as any, query)
+  const searchableFields = ["name", "email", "phone"];
+
+  const userQuery = new QueryBuilder(
+    User.find().select("-password") as mongoose.Query<IUser[], IUser>,
+    query
+  )
     .search(searchableFields)
     .filter()
     .sort()
@@ -82,28 +87,29 @@ const getAllUsers = async (query: Record<string, string>) => {
   };
 };
 
-const getUserById = async (userId: string): Promise<Omit<IUser, 'password'> | null> => {
-  const user = await User.findById(userId).select('-password');
+const getUserById = async (
+  userId: string
+): Promise<Omit<IUser, "password"> | null> => {
+  const user = await User.findById(userId).select("-password");
   return user;
 };
 
 const getUserByEmail = async (email: string): Promise<IUser | null> => {
-  const user = await User.findOne({ email }).select('+password');
+  const user = await User.findOne({ email }).select("+password");
   return user;
 };
 
 const updateUser = async (
   userId: string,
-  updateData: IUpdateUser,
-): Promise<Omit<IUser, 'password'> | null> => {
-  const updatedUser = await User.findByIdAndUpdate(
-    userId,
-    updateData,
-    { new: true, runValidators: true }
-  ).select('-password');
+  updateData: IUpdateUser
+): Promise<Omit<IUser, "password"> | null> => {
+  const updatedUser = await User.findByIdAndUpdate(userId, updateData, {
+    new: true,
+    runValidators: true,
+  }).select("-password");
 
   if (!updatedUser) {
-    throw new AppError(404, 'User not found');
+    throw new AppError(404, "User not found");
   }
 
   return updatedUser;
@@ -111,16 +117,16 @@ const updateUser = async (
 
 const updateUserRole = async (
   userId: string,
-  role: 'admin' | 'sender' | 'receiver',
-): Promise<Omit<IUser, 'password'> | null> => {
+  role: "admin" | "sender" | "receiver"
+): Promise<Omit<IUser, "password"> | null> => {
   const updatedUser = await User.findByIdAndUpdate(
     userId,
     { role },
     { new: true, runValidators: true }
-  ).select('-password');
+  ).select("-password");
 
   if (!updatedUser) {
-    throw new AppError(404, 'User not found');
+    throw new AppError(404, "User not found");
   }
 
   return updatedUser;
@@ -128,16 +134,16 @@ const updateUserRole = async (
 
 const blockUnblockUser = async (
   userId: string,
-  isBlocked: boolean,
-): Promise<Omit<IUser, 'password'> | null> => {
+  isBlocked: boolean
+): Promise<Omit<IUser, "password"> | null> => {
   const updatedUser = await User.findByIdAndUpdate(
     userId,
     { isBlocked },
     { new: true, runValidators: true }
-  ).select('-password');
+  ).select("-password");
 
   if (!updatedUser) {
-    throw new AppError(404, 'User not found');
+    throw new AppError(404, "User not found");
   }
 
   return updatedUser;
@@ -145,32 +151,35 @@ const blockUnblockUser = async (
 
 const changePassword = async (
   userId: string,
-  passwordData: IChangePassword,
+  passwordData: IChangePassword
 ): Promise<void> => {
   // Get user with password
-  const user = await User.findById(userId).select('+password');
+  const user = await User.findById(userId).select("+password");
   if (!user) {
-    throw new AppError(404, 'User not found');
+    throw new AppError(404, "User not found");
   }
 
   // Check if current password is correct
   const isCurrentPasswordValid = await user.isPasswordMatched(
     passwordData.currentPassword,
-    user.password,
+    user.password
   );
 
   if (!isCurrentPasswordValid) {
-    throw new AppError(400, 'Current password is incorrect');
+    throw new AppError(400, "Current password is incorrect");
   }
 
   // Check if new password is different from current password
   const isSamePassword = await user.isPasswordMatched(
     passwordData.newPassword,
-    user.password,
+    user.password
   );
 
   if (isSamePassword) {
-    throw new AppError(400, 'New password must be different from current password');
+    throw new AppError(
+      400,
+      "New password must be different from current password"
+    );
   }
 
   // Update password (will be hashed automatically by pre-save middleware)
@@ -180,17 +189,17 @@ const changePassword = async (
 
 const deleteUser = async (userId: string): Promise<void> => {
   const deletedUser = await User.findByIdAndDelete(userId);
-  
+
   if (!deletedUser) {
-    throw new AppError(404, 'User not found');
+    throw new AppError(404, "User not found");
   }
 };
 
 const getUserStats = async (): Promise<IUserStats> => {
   const totalUsers = await User.countDocuments();
-  const adminCount = await User.countDocuments({ role: 'admin' });
-  const senderCount = await User.countDocuments({ role: 'sender' });
-  const receiverCount = await User.countDocuments({ role: 'receiver' });
+  const adminCount = await User.countDocuments({ role: "admin" });
+  const senderCount = await User.countDocuments({ role: "sender" });
+  const receiverCount = await User.countDocuments({ role: "receiver" });
   const blockedUsers = await User.countDocuments({ isBlocked: true });
   const activeUsers = await User.countDocuments({ isBlocked: false });
 
@@ -227,4 +236,4 @@ export const UserService = {
   getUserStats,
   checkUserExists,
   isUserBlocked,
-}; 
+};
