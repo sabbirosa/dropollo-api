@@ -22,7 +22,11 @@ export const validateRequest =
       // Update request object with validated data
       if (validated.body) req.body = validated.body;
       if (validated.params) req.params = validated.params;
-      if (validated.query) req.query = validated.query;
+      if (validated.query) {
+        // Cannot directly reassign req.query as it's read-only
+        // Instead, merge the validated properties into the existing query object
+        Object.assign(req.query, validated.query);
+      }
 
       next();
     } catch (error) {

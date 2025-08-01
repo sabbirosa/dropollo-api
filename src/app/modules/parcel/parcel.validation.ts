@@ -154,9 +154,26 @@ export const parcelIdValidation = z.object({
 // Assign delivery personnel validation
 export const assignDeliveryPersonnelValidation = z.object({
   body: z.object({
-    deliveryPersonnelId: z
-      .string()
-      .regex(/^[0-9a-fA-F]{24}$/, "Invalid user ID format"),
+    deliveryPersonnel: z.object({
+      name: z
+        .string()
+        .trim()
+        .min(2, "Name must be at least 2 characters long"),
+      email: z
+        .string()
+        .trim()
+        .email("Please enter a valid email address")
+        .toLowerCase(),
+      phone: z
+        .string()
+        .trim()
+        .regex(/^\+?[\d\s\-()]+$/, "Please enter a valid phone number"),
+      employeeId: z.string().trim().optional(),
+      vehicleInfo: z.object({
+        type: z.string().trim().min(1, "Vehicle type is required"),
+        plateNumber: z.string().trim().min(1, "Plate number is required"),
+      }).optional(),
+    }),
   }),
 });
 

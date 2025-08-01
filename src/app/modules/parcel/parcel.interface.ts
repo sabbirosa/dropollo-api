@@ -15,7 +15,7 @@ export enum ParcelStatus {
 export interface IStatusLog {
   status: ParcelStatus;
   timestamp: Date;
-  updatedBy: ObjectId; // Reference to User
+  updatedBy: string; // Reference to User
   location?: string;
   note?: string;
 }
@@ -45,6 +45,17 @@ export interface IParcelDetails {
   value?: number;
 }
 
+export interface IDeliveryPersonnel {
+  name: string;
+  email: string;
+  phone: string;
+  employeeId?: string;
+  vehicleInfo?: {
+    type: string;
+    plateNumber: string;
+  };
+}
+
 export interface IDeliveryInfo {
   preferredDeliveryDate?: Date;
   deliveryInstructions?: string;
@@ -72,7 +83,7 @@ export interface IParcel {
   statusHistory: IStatusLog[]; // Embedded status logs
   isBlocked: boolean;
   isCancelled: boolean;
-  deliveryPersonnel?: ObjectId; // Reference to User (optional)
+  deliveryPersonnel?: IDeliveryPersonnel; // Delivery personnel information (optional)
   createdAt: Date;
   updatedAt: Date;
 }
@@ -104,4 +115,25 @@ export interface IParcelFilters {
   startDate?: Date;
   endDate?: Date;
   urgency?: "standard" | "express" | "urgent";
+}
+
+export interface IParcelStats {
+  totalParcels: number;
+  deliveredParcels: number;
+  inTransitParcels: number;
+  pendingParcels: number;
+  cancelledParcels: number;
+  averageDeliveryTime: string;
+  revenueThisMonth: number;
+  statusBreakdown: {
+    requested: number;
+    approved: number;
+    picked_up: number;
+    in_transit: number;
+    out_for_delivery: number;
+    delivered: number;
+    cancelled: number;
+    returned: number;
+    failed_delivery: number;
+  };
 }

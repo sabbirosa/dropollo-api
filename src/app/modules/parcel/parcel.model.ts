@@ -1,12 +1,13 @@
 import { model, Model, Schema } from "mongoose";
 import {
   IDeliveryInfo,
+  IDeliveryPersonnel,
   IParcel,
   IParcelDetails,
   IParcelReceiver,
   IPricing,
   IStatusLog,
-  ParcelStatus,
+  ParcelStatus
 } from "./parcel.interface";
 
 export type ParcelModel = Model<IParcel>;
@@ -25,8 +26,7 @@ const statusLogSchema = new Schema<IStatusLog>(
       required: [true, "Timestamp is required"],
     },
     updatedBy: {
-      type: Schema.Types.ObjectId,
-      ref: "User",
+      type: String,
       required: [true, "Updated by user is required"],
     },
     location: {
@@ -227,6 +227,60 @@ const pricingSchema = new Schema<IPricing>(
   { _id: false, versionKey: false }
 );
 
+// Vehicle Info Schema (for delivery personnel)
+const vehicleInfoSchema = new Schema(
+  {
+    type: {
+      type: String,
+      required: [true, "Vehicle type is required"],
+      trim: true,
+    },
+    plateNumber: {
+      type: String,
+      required: [true, "Plate number is required"],
+      trim: true,
+      uppercase: true,
+    },
+  },
+  { _id: false, versionKey: false }
+);
+
+// Delivery Personnel Schema
+const deliveryPersonnelSchema = new Schema<IDeliveryPersonnel>(
+  {
+    name: {
+      type: String,
+      required: [true, "Delivery personnel name is required"],
+      trim: true,
+      minlength: [2, "Name must be at least 2 characters long"],
+    },
+    email: {
+      type: String,
+      required: [true, "Email is required"],
+      trim: true,
+      lowercase: true,
+      match: [
+        /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
+        "Please enter a valid email",
+      ],
+    },
+    phone: {
+      type: String,
+      required: [true, "Phone is required"],
+      trim: true,
+      match: [/^\+?[\d\s\-()]+$/, "Please enter a valid phone number"],
+    },
+    employeeId: {
+      type: String,
+      trim: true,
+    },
+    vehicleInfo: {
+      type: vehicleInfoSchema,
+    },
+  },
+  { _id: false, versionKey: false }
+);
+
 // Main Parcel Schema
 const parcelSchema = new Schema<IParcel, ParcelModel>(
   {
@@ -277,8 +331,7 @@ const parcelSchema = new Schema<IParcel, ParcelModel>(
       default: false,
     },
     deliveryPersonnel: {
-      type: Schema.Types.ObjectId,
-      ref: "User",
+      type: deliveryPersonnelSchema,
     },
   },
   {
@@ -300,7 +353,7 @@ parcelSchema.pre("save", function (next) {
     this.statusHistory.push({
       status: ParcelStatus.REQUESTED,
       timestamp: new Date(),
-      updatedBy: this.sender,
+      updatedBy: this.sender.toString(),
       note: "Parcel request created",
     });
   }

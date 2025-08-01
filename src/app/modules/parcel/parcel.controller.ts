@@ -230,11 +230,11 @@ const blockParcel = catchAsync(async (req: Request, res: Response) => {
 const assignDeliveryPersonnel = catchAsync(
   async (req: Request, res: Response) => {
     const { id } = req.params;
-    const { deliveryPersonnelId } = req.body;
+    const { deliveryPersonnel } = req.body;
 
     const result = await ParcelService.assignDeliveryPersonnel(
       id,
-      deliveryPersonnelId
+      deliveryPersonnel
     );
 
     sendResponse(res, {
