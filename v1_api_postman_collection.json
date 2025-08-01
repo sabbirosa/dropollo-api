@@ -16,7 +16,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john.doe@example.com\",\n  \"password\": \"Password123!\",\n  \"phone\": \"+1234567890\",\n  \"address\": {\n    \"street\": \"123 Main St\",\n    \"city\": \"New York\",\n    \"state\": \"NY\",\n    \"zipCode\": \"10001\",\n    \"country\": \"USA\"\n  },\n  \"role\": \"sender\"\n}",
+							"raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john.doe@gmail.com\",\n  \"password\": \"Password123!\",\n  \"phone\": \"+1234567890\",\n  \"address\": {\n    \"street\": \"123 Main St\",\n    \"city\": \"New York\",\n    \"state\": \"NY\",\n    \"zipCode\": \"10001\",\n    \"country\": \"USA\"\n  },\n  \"role\": \"sender\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -34,7 +34,227 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Admin Registration",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"Admin User\",\n  \"email\": \"admin@dropollo.com\",\n  \"password\": \"Admin123!\",\n  \"phone\": \"+1234567890\",\n  \"address\": {\n    \"street\": \"123 Admin St\",\n    \"city\": \"Admin City\",\n    \"state\": \"AC\",\n    \"zipCode\": \"12345\",\n    \"country\": \"USA\"\n  },\n  \"role\": \"admin\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/auth/register",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"auth",
+										"register"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "http://localhost:5173"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "457"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1c9-30aDviPErL3AE3dn2F27r9MdbJs\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 01 Aug 2025 16:11:25 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"statusCode\": 201,\n    \"success\": true,\n    \"message\": \"User registered successfully\",\n    \"data\": {\n        \"name\": \"Admin User\",\n        \"email\": \"admin@dropollo.com\",\n        \"phone\": \"+1234567890\",\n        \"address\": {\n            \"street\": \"123 Admin St\",\n            \"city\": \"Admin City\",\n            \"state\": \"AC\",\n            \"zipCode\": \"12345\",\n            \"country\": \"USA\"\n        },\n        \"role\": \"admin\",\n        \"isBlocked\": false,\n        \"isVerified\": true,\n        \"isActive\": \"active\",\n        \"isDeleted\": false,\n        \"_id\": \"688ce72d92b2234ccf9289b7\",\n        \"createdAt\": \"2025-08-01T16:11:25.411Z\",\n        \"updatedAt\": \"2025-08-01T16:11:25.411Z\"\n    }\n}"
+						},
+						{
+							"name": "Sender Registration",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"John Sender\",\n  \"email\": \"john.sender@gmail.com\",\n  \"password\": \"Sender123!\",\n  \"phone\": \"+1987654321\",\n  \"address\": {\n    \"street\": \"456 Sender Ave\",\n    \"city\": \"Sender City\",\n    \"state\": \"SC\",\n    \"zipCode\": \"54321\",\n    \"country\": \"USA\"\n  },\n  \"role\": \"sender\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/auth/register",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"auth",
+										"register"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "http://localhost:5173"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "465"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1d1-mLgm25W4B+K+eWFCKUBOM34oZys\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 01 Aug 2025 16:12:58 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"statusCode\": 201,\n    \"success\": true,\n    \"message\": \"User registered successfully\",\n    \"data\": {\n        \"name\": \"John Sender\",\n        \"email\": \"john.sender@gmail.com\",\n        \"phone\": \"+1987654321\",\n        \"address\": {\n            \"street\": \"456 Sender Ave\",\n            \"city\": \"Sender City\",\n            \"state\": \"SC\",\n            \"zipCode\": \"54321\",\n            \"country\": \"USA\"\n        },\n        \"role\": \"sender\",\n        \"isBlocked\": false,\n        \"isVerified\": true,\n        \"isActive\": \"active\",\n        \"isDeleted\": false,\n        \"_id\": \"688ce78992b2234ccf9289ba\",\n        \"createdAt\": \"2025-08-01T16:12:57.974Z\",\n        \"updatedAt\": \"2025-08-01T16:12:57.974Z\"\n    }\n}"
+						},
+						{
+							"name": "Receiver Registration",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"Jane Receiver\",\n  \"email\": \"jane.receiver@gmail.com\",\n  \"password\": \"Receiver123!\",\n  \"phone\": \"+1122334455\",\n  \"address\": {\n    \"street\": \"789 Receiver Rd\",\n    \"city\": \"Receiver City\",\n    \"state\": \"RC\",\n    \"zipCode\": \"98765\",\n    \"country\": \"USA\"\n  },\n  \"role\": \"receiver\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/auth/register",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"auth",
+										"register"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "http://localhost:5173"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "474"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1da-TiCeDbIMjbk7GNTEqthdCfBXtZE\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 01 Aug 2025 16:13:26 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"statusCode\": 201,\n    \"success\": true,\n    \"message\": \"User registered successfully\",\n    \"data\": {\n        \"name\": \"Jane Receiver\",\n        \"email\": \"jane.receiver@gmail.com\",\n        \"phone\": \"+1122334455\",\n        \"address\": {\n            \"street\": \"789 Receiver Rd\",\n            \"city\": \"Receiver City\",\n            \"state\": \"RC\",\n            \"zipCode\": \"98765\",\n            \"country\": \"USA\"\n        },\n        \"role\": \"receiver\",\n        \"isBlocked\": false,\n        \"isVerified\": true,\n        \"isActive\": \"active\",\n        \"isDeleted\": false,\n        \"_id\": \"688ce7a592b2234ccf9289bd\",\n        \"createdAt\": \"2025-08-01T16:13:25.904Z\",\n        \"updatedAt\": \"2025-08-01T16:13:25.904Z\"\n    }\n}"
+						}
+					]
 				},
 				{
 					"name": "User Login",
@@ -43,7 +263,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"email\": \"jane.receiver@gmail.com\",\n  \"password\": \"Receiver123!\"\n}",
+							"raw": "{\n  \"email\": \"john.doe@gmail.com\",\n  \"password\": \"Password123!\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -77,15 +297,11 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:8000/api/v1/auth/login",
-									"protocol": "http",
+									"raw": "{{BASE_URL}}/auth/login",
 									"host": [
-										"localhost"
+										"{{BASE_URL}}"
 									],
-									"port": "8000",
 									"path": [
-										"api",
-										"v1",
 										"auth",
 										"login"
 									]
