@@ -101,79 +101,79 @@ For Health check go to `http://localhost:8000/api/v1/health`
 
 ### Authentication Routes
 
-| Method | Endpoint                    | Description | Access        |
-|--------|-----------------------------|-------------|---------------|
-| `POST` | `/api/auth/register`        | **User Registration**: Creates a new user account with email, password, name, phone, address, and role. Validates unique email, hashes password with bcrypt, and returns user data without password. Default role is 'sender' unless specified. | Public |
-| `POST` | `/api/auth/login`           | **User Login**: Authenticates user with email and password. Compares hashed password, generates JWT access and refresh tokens, sets tokens in HTTP-only cookies, and returns user data with tokens. | Public |
-| `POST` | `/api/auth/refresh-token`   | **Token Refresh**: Validates refresh token and generates new access token to extend user session without requiring re-login. | Public |
-| `GET`  | `/api/auth/me`              | **Get Current Profile**: Retrieves authenticated user's complete profile information including personal details, address, and account status. Requires valid JWT token. | Authenticated |
-| `PUT`  | `/api/auth/profile`         | **Update Profile**: Allows authenticated users to update their personal information including name, phone, and address. Validates input data and returns updated profile. | Authenticated |
-| `PUT`  | `/api/auth/change-password` | **Change Password**: Enables users to change their password by providing current password and new password. Validates current password, hashes new password, and updates user record. | Authenticated |
-| `POST` | `/api/auth/logout`          | **User Logout**: Clears authentication cookies and invalidates user session. Removes access and refresh tokens from client. | Authenticated |
+| Method | Endpoint                    | Description                                                                                                                                                                                                                                     | Access        |
+| ------ | --------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- |
+| `POST` | `/api/auth/register`        | **User Registration**: Creates a new user account with email, password, name, phone, address, and role. Validates unique email, hashes password with bcrypt, and returns user data without password. Default role is 'sender' unless specified. | Public        |
+| `POST` | `/api/auth/login`           | **User Login**: Authenticates user with email and password. Compares hashed password, generates JWT access and refresh tokens, sets tokens in HTTP-only cookies, and returns user data with tokens.                                             | Public        |
+| `POST` | `/api/auth/refresh-token`   | **Token Refresh**: Validates refresh token and generates new access token to extend user session without requiring re-login.                                                                                                                    | Public        |
+| `GET`  | `/api/auth/me`              | **Get Current Profile**: Retrieves authenticated user's complete profile information including personal details, address, and account status. Requires valid JWT token.                                                                         | Authenticated |
+| `PUT`  | `/api/auth/profile`         | **Update Profile**: Allows authenticated users to update their personal information including name, phone, and address. Validates input data and returns updated profile.                                                                       | Authenticated |
+| `PUT`  | `/api/auth/change-password` | **Change Password**: Enables users to change their password by providing current password and new password. Validates current password, hashes new password, and updates user record.                                                           | Authenticated |
+| `POST` | `/api/auth/logout`          | **User Logout**: Clears authentication cookies and invalidates user session. Removes access and refresh tokens from client.                                                                                                                     | Authenticated |
 
 ### User Management Routes
 
 #### Admin-Only Routes
 
-| Method   | Endpoint              | Description |
-|----------|----------------------|-------------|
+| Method   | Endpoint              | Description                                                                                                                                                                                                   |
+| -------- | --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `GET`    | `/api/user/`          | **Get All Users**: Retrieves paginated list of all users in the system with filtering options. Admin can view user details, roles, and account status. Supports search, pagination, and role-based filtering. |
-| `GET`    | `/api/user/stats`     | **User Statistics**: Provides comprehensive user analytics including total users, active users, blocked users, role distribution, and registration trends. Used for admin dashboard and reporting. |
-| `GET`    | `/api/user/:id`       | **Get User by ID**: Retrieves detailed information about a specific user including profile data, role, account status, and creation date. Admin can view any user's complete profile. |
-| `PUT`    | `/api/user/:id/role`  | **Update User Role**: Allows admin to change user roles between 'admin', 'sender', and 'receiver'. Validates role permissions and updates user's access capabilities. |
-| `PUT`    | `/api/user/:id/block` | **Block/Unblock User**: Enables admin to block or unblock user accounts. Blocked users cannot access protected routes or perform parcel operations. Includes reason for blocking. |
-| `DELETE` | `/api/user/:id`       | **Delete User**: Permanently removes user account from the system. Deletes user data and associated records. Cannot be undone. |
+| `GET`    | `/api/user/stats`     | **User Statistics**: Provides comprehensive user analytics including total users, active users, blocked users, role distribution, and registration trends. Used for admin dashboard and reporting.            |
+| `GET`    | `/api/user/:id`       | **Get User by ID**: Retrieves detailed information about a specific user including profile data, role, account status, and creation date. Admin can view any user's complete profile.                         |
+| `PUT`    | `/api/user/:id/role`  | **Update User Role**: Allows admin to change user roles between 'admin', 'sender', and 'receiver'. Validates role permissions and updates user's access capabilities.                                         |
+| `PUT`    | `/api/user/:id/block` | **Block/Unblock User**: Enables admin to block or unblock user accounts. Blocked users cannot access protected routes or perform parcel operations. Includes reason for blocking.                             |
+| `DELETE` | `/api/user/:id`       | **Delete User**: Permanently removes user account from the system. Deletes user data and associated records. Cannot be undone.                                                                                |
 
 #### User Profile Routes
 
-| Method | Endpoint                            | Description |
-|--------|-------------------------------------|-------------|
-| `GET`  | `/api/user/profile/me`              | **Get My Profile**: Retrieves current authenticated user's complete profile information including personal details, address, role, and account status. |
+| Method | Endpoint                            | Description                                                                                                                                                                      |
+| ------ | ----------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `GET`  | `/api/user/profile/me`              | **Get My Profile**: Retrieves current authenticated user's complete profile information including personal details, address, role, and account status.                           |
 | `PUT`  | `/api/user/profile/update`          | **Update My Profile**: Allows users to update their personal information including name, phone, address, and other profile details. Validates input and returns updated profile. |
-| `PUT`  | `/api/user/profile/change-password` | **Change My Password**: Enables users to change their own password by providing current password verification and new password. Includes password strength validation. |
+| `PUT`  | `/api/user/profile/change-password` | **Change My Password**: Enables users to change their own password by providing current password verification and new password. Includes password strength validation.           |
 
 ### Parcel Management Routes
 
 #### Public Routes
 
-| Method | Endpoint                        | Description |
-|--------|--------------------------------|-------------|
+| Method | Endpoint                        | Description                                                                                                                                                                               |
+| ------ | ------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `GET`  | `/api/parcel/track/:trackingId` | **Track Parcel**: Public endpoint to track parcel status using tracking ID. Returns parcel details, current status, delivery information, and status history. No authentication required. |
 
 #### Sender Routes
 
-| Method   | Endpoint                 | Description |
-|----------|--------------------------|-------------|
+| Method   | Endpoint                 | Description                                                                                                                                                                                                                        |
+| -------- | ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `POST`   | `/api/parcel/`           | **Create Parcel**: Creates new parcel delivery request with receiver details, parcel specifications, delivery preferences, and urgency level. Auto-generates tracking ID, calculates fees, and sets initial status to 'REQUESTED'. |
-| `GET`    | `/api/parcel/my-sent`    | **Get My Sent Parcels**: Retrieves paginated list of all parcels created by the authenticated sender. Includes filtering by status, date range, and search functionality. |
-| `PUT`    | `/api/parcel/:id`        | **Update Parcel**: Allows sender to modify parcel details including receiver information, parcel specifications, and delivery preferences. Only available before parcel is dispatched (REQUESTED or APPROVED status). |
-| `DELETE` | `/api/parcel/:id/cancel` | **Cancel Parcel**: Enables sender to cancel parcel delivery with reason. Only available for parcels in REQUESTED or APPROVED status. Updates status to CANCELLED and maintains cancellation history. |
+| `GET`    | `/api/parcel/my-sent`    | **Get My Sent Parcels**: Retrieves paginated list of all parcels created by the authenticated sender. Includes filtering by status, date range, and search functionality.                                                          |
+| `PUT`    | `/api/parcel/:id`        | **Update Parcel**: Allows sender to modify parcel details including receiver information, parcel specifications, and delivery preferences. Only available before parcel is dispatched (REQUESTED or APPROVED status).              |
+| `DELETE` | `/api/parcel/:id/cancel` | **Cancel Parcel**: Enables sender to cancel parcel delivery with reason. Only available for parcels in REQUESTED or APPROVED status. Updates status to CANCELLED and maintains cancellation history.                               |
 
 #### Receiver Routes
 
-| Method | Endpoint                           | Description |
-|--------|-----------------------------------|-------------|
-| `GET`  | `/api/parcel/my-received`          | **Get My Received Parcels**: Retrieves paginated list of all parcels addressed to the authenticated receiver. Filters parcels by receiver email and includes status filtering and search. |
+| Method | Endpoint                           | Description                                                                                                                                                                                                                |
+| ------ | ---------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `GET`  | `/api/parcel/my-received`          | **Get My Received Parcels**: Retrieves paginated list of all parcels addressed to the authenticated receiver. Filters parcels by receiver email and includes status filtering and search.                                  |
 | `PUT`  | `/api/parcel/:id/confirm-delivery` | **Confirm Delivery**: Allows receiver to confirm successful delivery of parcel. Updates status to DELIVERED, adds confirmation note, and records delivery timestamp. Only available for parcels addressed to the receiver. |
-| `GET`  | `/api/parcel/delivery-history`     | **Get Delivery History**: Retrieves paginated list of successfully delivered parcels for the authenticated receiver. Shows completed deliveries with delivery dates and confirmation details. |
+| `GET`  | `/api/parcel/delivery-history`     | **Get Delivery History**: Retrieves paginated list of successfully delivered parcels for the authenticated receiver. Shows completed deliveries with delivery dates and confirmation details.                              |
 
 #### Admin Routes
 
-| Method   | Endpoint                 | Description |
-|----------|--------------------------|-------------|
-| `GET`    | `/api/parcel/`           | **Get All Parcels**: Retrieves paginated list of all parcels in the system with comprehensive filtering options. Admin can filter by status, sender, receiver, date range, urgency, and tracking ID. |
+| Method   | Endpoint                 | Description                                                                                                                                                                                                               |
+| -------- | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `GET`    | `/api/parcel/`           | **Get All Parcels**: Retrieves paginated list of all parcels in the system with comprehensive filtering options. Admin can filter by status, sender, receiver, date range, urgency, and tracking ID.                      |
 | `PUT`    | `/api/parcel/:id/status` | **Update Parcel Status**: Allows admin to change parcel status following business rules. Validates status transitions, adds status log entry with admin details, and updates current status. Includes location and notes. |
-| `PUT`    | `/api/parcel/:id/block`  | **Block/Unblock Parcel**: Enables admin to block or unblock specific parcels. Blocked parcels cannot be updated or processed further. Includes reason for blocking and maintains block history. |
-| `PUT`    | `/api/parcel/:id/assign` | **Assign Delivery Personnel**: Allows admin to assign delivery personnel to parcels. Includes personnel details like name, email, phone, employee ID, and vehicle information. |
-| `GET`    | `/api/parcel/stats`      | **Get Parcel Statistics**: Provides comprehensive parcel analytics including total parcels, delivered count, in-transit count, average delivery time, revenue metrics, and status breakdown. |
-| `DELETE` | `/api/parcel/:id`        | **Delete Parcel**: Permanently removes parcel from the system. Deletes parcel data, status history, and all associated records. Cannot be undone. |
+| `PUT`    | `/api/parcel/:id/block`  | **Block/Unblock Parcel**: Enables admin to block or unblock specific parcels. Blocked parcels cannot be updated or processed further. Includes reason for blocking and maintains block history.                           |
+| `PUT`    | `/api/parcel/:id/assign` | **Assign Delivery Personnel**: Allows admin to assign delivery personnel to parcels. Includes personnel details like name, email, phone, employee ID, and vehicle information.                                            |
+| `GET`    | `/api/parcel/stats`      | **Get Parcel Statistics**: Provides comprehensive parcel analytics including total parcels, delivered count, in-transit count, average delivery time, revenue metrics, and status breakdown.                              |
+| `DELETE` | `/api/parcel/:id`        | **Delete Parcel**: Permanently removes parcel from the system. Deletes parcel data, status history, and all associated records. Cannot be undone.                                                                         |
 
 #### Shared Routes (Role-based access)
 
-| Method | Endpoint                         | Description |
-|--------|----------------------------------|-------------|
+| Method | Endpoint                         | Description                                                                                                                                                                                                                  |
+| ------ | -------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `GET`  | `/api/parcel/:id`                | **Get Parcel Details**: Retrieves detailed parcel information including sender, receiver, parcel details, pricing, current status, and delivery information. Access restricted to parcel owner (sender), receiver, or admin. |
-| `GET`  | `/api/parcel/:id/status-history` | **Get Status History**: Retrieves complete status history of parcel including all status changes, timestamps, updater information, locations, and notes. Access restricted to parcel owner, receiver, or admin. |
+| `GET`  | `/api/parcel/:id/status-history` | **Get Status History**: Retrieves complete status history of parcel including all status changes, timestamps, updater information, locations, and notes. Access restricted to parcel owner, receiver, or admin.              |
 
 ## 🔄 Parcel Status Flow
 
@@ -343,4 +343,4 @@ npm start
 
 ### Postman Collection
 
-A Postman collection is available at [Postman Collection](https://www.getpostman.com/collections/your-collection-id) to test all API endpoints.
+A Postman collection is available at [Postman Collection](https://github.com/sabbirosa/dropollo-api/blob/main/v1_api_postman_collection.json) to test all API endpoints.
