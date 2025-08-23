@@ -2,8 +2,8 @@ export interface IRegisterUser {
   name: string;
   email: string;
   password: string;
-  phone: string;
-  address: {
+  phone?: string;
+  address?: {
     street: string;
     city: string;
     state: string;
@@ -28,20 +28,20 @@ export interface IAuthResponse {
     _id: string;
     name: string;
     email: string;
-    phone: string;
-    address: {
+    phone?: string;
+    address?: {
       street: string;
       city: string;
       state: string;
       zipCode: string;
       country: string;
     };
-    role: string;
-    isVerified: boolean;
-    isActive: string;
-    isDeleted: boolean;
-    createdAt: Date;
-    updatedAt: Date;
+    role?: string;
+    isVerified?: boolean;
+    isActive?: string;
+    isDeleted?: boolean;
+    createdAt?: Date;
+    updatedAt?: Date;
   };
   accessToken: string;
   refreshToken?: string;

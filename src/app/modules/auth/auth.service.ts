@@ -18,6 +18,7 @@ const registerUser = async (
   userData: IRegisterUser
 ): Promise<Omit<IUser, "password">> => {
   // Check if user already exists
+
   const existingUser = await User.findOne({ email: userData.email });
   if (existingUser) {
     throw new AppError(409, "User with this email already exists");
@@ -90,6 +91,7 @@ const loginUser = async (loginData: ILoginUser): Promise<IAuthResponse> => {
 
   // Return user data without password and tokens
   const userObject = user.toObject();
+
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { password: _, ...userWithoutPassword } = userObject;
 

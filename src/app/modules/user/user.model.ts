@@ -15,15 +15,15 @@ export interface IUser {
   name: string;
   email: string;
   password: string;
-  phone: string;
-  address: IAddress;
-  role: "admin" | "sender" | "receiver";
-  isBlocked: boolean;
-  isVerified: boolean;
-  isActive: IsActive;
-  isDeleted: boolean;
-  createdAt: Date;
-  updatedAt: Date;
+  phone?: string;
+  address?: IAddress;
+  role?: "admin" | "sender" | "receiver";
+  isBlocked?: boolean;
+  isVerified?: boolean;
+  isActive?: IsActive;
+  isDeleted?: boolean;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export interface IUserMethods {
@@ -94,13 +94,13 @@ const userSchema = new Schema<IUser, UserModel, IUserMethods>(
     },
     phone: {
       type: String,
-      required: [true, "Phone number is required"],
+      // required: [true, "Phone number is required"],
       trim: true,
       match: [/^\+?[\d\s\-()]+$/, "Please enter a valid phone number"],
     },
     address: {
       type: addressSchema,
-      required: [true, "Address is required"],
+      // required: [true, "Address is required"],
     },
     role: {
       type: String,
@@ -108,7 +108,7 @@ const userSchema = new Schema<IUser, UserModel, IUserMethods>(
         values: ["admin", "sender", "receiver"],
         message: "Role must be admin, sender, or receiver",
       },
-      required: [true, "Role is required"],
+      // required: [true, "Role is required"],
       default: "sender",
     },
     isBlocked: {
