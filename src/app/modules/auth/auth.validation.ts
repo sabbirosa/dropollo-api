@@ -1,12 +1,14 @@
 import { z } from "zod";
 
-const addressValidationSchema = z.object({
-  street: z.string().min(1, "Street is required").trim(),
-  city: z.string().min(1, "City is required").trim(),
-  state: z.string().min(1, "State is required").trim(),
-  zipCode: z.string().min(1, "Zip code is required").trim(),
-  country: z.string().min(1, "Country is required").trim(),
-});
+const addressValidationSchema = z
+  .object({
+    street: z.string().min(1, "Street is required").trim().optional(),
+    city: z.string().min(1, "City is required").trim().optional(),
+    state: z.string().min(1, "State is required").trim().optional(),
+    zipCode: z.string().min(1, "Zip code is required").trim().optional(),
+    country: z.string().min(1, "Country is required").trim().optional(),
+  })
+  .optional();
 
 const registerValidationSchema = z.object({
   body: z.object({
@@ -36,11 +38,12 @@ const registerValidationSchema = z.object({
       .string()
       .min(1, "Phone number is required")
       .regex(/^\+?[\d\s\-()]+$/, "Please enter a valid phone number")
-      .trim(),
+      .trim()
+      .optional(),
 
-    address: addressValidationSchema,
+    address: addressValidationSchema.optional(),
 
-    role: z.enum(["admin", "sender", "receiver"]).default("sender"),
+    role: z.enum(["admin", "sender", "receiver"]).default("sender").optional(),
   }),
 });
 

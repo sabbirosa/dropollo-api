@@ -174,6 +174,11 @@ export const assignDeliveryPersonnelValidation = z.object({
         plateNumber: z.string().trim().min(1, "Plate number is required"),
       }).optional(),
     }),
+    note: z
+      .string()
+      .trim()
+      .max(500, "Note cannot exceed 500 characters")
+      .optional(),
   }),
 });
 
