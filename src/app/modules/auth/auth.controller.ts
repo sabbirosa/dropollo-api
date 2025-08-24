@@ -1,9 +1,10 @@
 import type { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
+
 import AppError from "../../errorHelpers/AppError";
 import { catchAsync } from "../../utils/catchAsync";
 import { sendResponse } from "../../utils/sendResponse";
-import { setAuthCookie } from "../../utils/setCookie";
+import { clearAuthCookies, setAuthCookie } from "../../utils/setCookie";
 import { AuthService } from "./auth.service";
 
 // Register new user
@@ -108,11 +109,15 @@ const logout = catchAsync(async (req: Request, res: Response) => {
     throw new AppError(StatusCodes.UNAUTHORIZED, "User not authenticated");
   }
 
+  console.log(`Logging out user: ${userId}`);
+  console.log("Cookies before logout:", req.cookies);
+
   await AuthService.logoutUser(userId);
 
-  // Clear cookies
-  res.clearCookie("accessToken");
-  res.clearCookie("refreshToken");
+  // Clear cookies using utility function
+  clearAuthCookies(res);
+  
+  console.log("Cookies cleared from response");
 
   sendResponse(res, {
     statusCode: StatusCodes.OK,
