@@ -24,13 +24,15 @@ export class QueryBuilder<T> {
   }
 
   search(searchableField: string[]): this {
-    const searchTerm = this.query.searchTerm || "";
-    const searchQuery = {
-      $or: searchableField.map((field) => ({
-        [field]: { $regex: searchTerm, $options: "i" },
-      })),
-    };
-    this.modelQuery = this.modelQuery.find(searchQuery);
+    const searchTerm = this.query.search || this.query.searchTerm || "";
+    if (searchTerm) {
+      const searchQuery = {
+        $or: searchableField.map((field) => ({
+          [field]: { $regex: searchTerm, $options: "i" },
+        })),
+      };
+      this.modelQuery = this.modelQuery.find(searchQuery);
+    }
     return this;
   }
 
@@ -63,7 +65,9 @@ export class QueryBuilder<T> {
   }
 
   async getMeta() {
-    const totalDocuments = await this.modelQuery.model.countDocuments();
+    // Create a clone of the query without pagination to count filtered documents
+    const countQuery = this.modelQuery.model.find(this.modelQuery.getFilter());
+    const totalDocuments = await countQuery.countDocuments();
 
     const page = Number(this.query.page) || 1;
     const limit = Number(this.query.limit) || 10;

@@ -230,11 +230,18 @@ const blockParcel = catchAsync(async (req: Request, res: Response) => {
 const assignDeliveryPersonnel = catchAsync(
   async (req: Request, res: Response) => {
     const { id } = req.params;
-    const { deliveryPersonnel } = req.body;
+    const { deliveryPersonnel, note } = req.body;
+    const adminId = req.user?.userId;
+
+    if (!adminId) {
+      throw new AppError(StatusCodes.UNAUTHORIZED, "Admin not authenticated");
+    }
 
     const result = await ParcelService.assignDeliveryPersonnel(
       id,
-      deliveryPersonnel
+      deliveryPersonnel,
+      note,
+      adminId
     );
 
     sendResponse(res, {

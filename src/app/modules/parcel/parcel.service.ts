@@ -600,7 +600,9 @@ const blockParcel = async (
 // Assign delivery personnel (Admin only)
 const assignDeliveryPersonnel = async (
   parcelId: string,
-  deliveryPersonnelInfo: IDeliveryPersonnel
+  deliveryPersonnelInfo: IDeliveryPersonnel,
+  note: string | undefined,
+  adminId: string
 ): Promise<IParcel> => {
   const parcel = await Parcel.findById(parcelId);
 
@@ -608,10 +610,40 @@ const assignDeliveryPersonnel = async (
     throw new AppError(StatusCodes.NOT_FOUND, "Parcel not found");
   }
 
+  // Check if parcel is already assigned to delivery personnel
+  if (parcel.deliveryPersonnel) {
+    throw new AppError(
+      StatusCodes.BAD_REQUEST,
+      "Parcel is already assigned to delivery personnel"
+    );
+  }
+
+  // Check if parcel can be assigned (not delivered, cancelled, or returned)
+  if (
+    [ParcelStatus.DELIVERED, ParcelStatus.CANCELLED, ParcelStatus.RETURNED].includes(
+      parcel.currentStatus
+    )
+  ) {
+    throw new AppError(
+      StatusCodes.BAD_REQUEST,
+      "Cannot assign delivery personnel to parcels that are delivered, cancelled, or returned"
+    );
+  }
+
+  // Create status log entry for assignment
+  const statusLogEntry = {
+    status: parcel.currentStatus, // Keep current status
+    timestamp: new Date(),
+    updatedBy: new Types.ObjectId(adminId),
+    note: note || "Delivery personnel assigned",
+  };
+
+  // Update parcel with delivery personnel and status history
   const updatedParcel = await Parcel.findByIdAndUpdate(
     parcelId,
     {
       deliveryPersonnel: deliveryPersonnelInfo,
+      $push: { statusHistory: statusLogEntry },
       updatedAt: new Date(),
     },
     { new: true, runValidators: true }
