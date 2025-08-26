@@ -20,7 +20,7 @@ export const checkAuth =
       const verifiedToken = verifyToken(
         accessToken,
         envVars.JWT.ACCESS_SECRET
-      ) as JwtPayload;
+      ) as JwtPayload & { userId: string; email: string; role: "admin" | "sender" | "receiver" };
 
       const isUserExist = await User.findOne({ email: verifiedToken.email });
 
@@ -46,7 +46,7 @@ export const checkAuth =
       if (!authRoles.includes(verifiedToken.role)) {
         throw new AppError(403, "You are not permitted to view this route!!!");
       }
-      req.user = verifiedToken;
+      req.user = verifiedToken as unknown as Express.User;
       next();
     } catch (error) {
       // eslint-disable-next-line no-console

@@ -110,6 +110,13 @@ router.put(
 
 router.get("/stats", checkAuth("admin"), ParcelController.getParcelStats);
 
+// Get user notifications (status updates from parcels) - Must come before :id routes
+router.get(
+  "/notifications",
+  checkAuth("admin", "sender", "receiver"),
+  ParcelController.getUserNotifications
+);
+
 router.delete(
   "/:id",
   checkAuth("admin"),

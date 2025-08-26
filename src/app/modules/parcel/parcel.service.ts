@@ -768,6 +768,94 @@ const getParcelStats = async (): Promise<IParcelStats> => {
   };
 };
 
+// Get user notifications from parcel status updates
+const getUserNotifications = async (
+  userId: string,
+  userRole: string,
+  userEmail: string
+) => {
+  let parcels: IParcel[] = [];
+
+  // Get parcels based on user role
+  if (userRole === "sender") {
+    // For senders, get their sent parcels
+    parcels = await Parcel.find({ sender: userId })
+      .sort({ updatedAt: -1 })
+      .limit(50);
+  } else if (userRole === "receiver") {
+    // For receivers, get parcels sent to their email
+    parcels = await Parcel.find({ "receiver.email": userEmail })
+      .sort({ updatedAt: -1 })
+      .limit(50);
+  } else if (userRole === "admin") {
+    // For admins, get recent parcels
+    parcels = await Parcel.find()
+      .sort({ updatedAt: -1 })
+      .limit(50);
+  }
+
+  // Transform parcels into notifications
+  const notifications = parcels.map((parcel) => {
+    const latestStatus = parcel.statusHistory[parcel.statusHistory.length - 1];
+    const previousStatus = parcel.statusHistory[parcel.statusHistory.length - 2];
+
+    // Determine notification type based on status change
+    let notificationType: "info" | "success" | "warning" | "error" = "info";
+    let title = `Parcel ${parcel.trackingId}`;
+    let message = `Status updated to ${parcel.currentStatus}`;
+
+    if (parcel.currentStatus === ParcelStatus.DELIVERED) {
+      notificationType = "success";
+      title = "Parcel Delivered";
+      message = `Your parcel ${parcel.trackingId} has been successfully delivered`;
+    } else if (parcel.currentStatus === ParcelStatus.CANCELLED) {
+      notificationType = "error";
+      title = "Parcel Cancelled";
+      message = `Your parcel ${parcel.trackingId} has been cancelled`;
+    } else if (parcel.currentStatus === ParcelStatus.FAILED_DELIVERY) {
+      notificationType = "warning";
+      title = "Delivery Failed";
+      message = `Delivery of parcel ${parcel.trackingId} has failed`;
+    } else if (parcel.currentStatus === ParcelStatus.IN_TRANSIT) {
+      notificationType = "info";
+      title = "Parcel In Transit";
+      message = `Your parcel ${parcel.trackingId} is now in transit`;
+    } else if (parcel.currentStatus === ParcelStatus.OUT_FOR_DELIVERY) {
+      notificationType = "info";
+      title = "Out for Delivery";
+      message = `Your parcel ${parcel.trackingId} is out for delivery`;
+    }
+
+    // Add location and note if available
+    if (latestStatus?.location) {
+      message += ` at ${latestStatus.location}`;
+    }
+    if (latestStatus?.note) {
+      message += `. Note: ${latestStatus.note}`;
+    }
+
+    return {
+      id: parcel._id.toString(),
+      parcelId: parcel._id.toString(),
+      trackingId: parcel.trackingId,
+      type: notificationType,
+      title,
+      message,
+      status: parcel.currentStatus,
+      timestamp: latestStatus?.timestamp || parcel.updatedAt,
+      read: false, // Default to unread
+      location: latestStatus?.location,
+      note: latestStatus?.note,
+      updatedBy: latestStatus?.updatedBy,
+    };
+  });
+
+  // Sort by timestamp (most recent first)
+  return notifications.sort((a, b) => 
+    new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
+  );
+};
+
 export const ParcelService = {
   createParcel,
   getParcelById,
@@ -783,4 +871,5 @@ export const ParcelService = {
   assignDeliveryPersonnel,
   deleteParcel,
   getParcelStats,
+  getUserNotifications,
 };

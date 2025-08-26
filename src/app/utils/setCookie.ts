@@ -25,8 +25,6 @@ export const setAuthCookie = (res: Response, tokenInfo: AuthTokens) => {
 };
 
 export const clearAuthCookies = (res: Response) => {
-  console.log("Server: Clearing auth cookies...");
-
   // Clear cookies with the same options used when setting them
   const cookieOptions = {
     httpOnly: true,
@@ -82,6 +80,4 @@ export const clearAuthCookies = (res: Response) => {
   res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
   res.setHeader("Pragma", "no-cache");
   res.setHeader("Expires", "0");
-
-  console.log("Server: Auth cookies cleared");
 };

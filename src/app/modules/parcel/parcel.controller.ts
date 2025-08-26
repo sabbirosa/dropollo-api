@@ -329,6 +329,26 @@ const getDeliveryHistory = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+// Get user notifications from parcel status updates
+const getUserNotifications = catchAsync(async (req: Request, res: Response) => {
+  const userId = req.user?.userId;
+  const userRole = req.user?.role;
+  const userEmail = req.user?.email;
+
+  if (!userId || !userRole || !userEmail) {
+    throw new AppError(StatusCodes.UNAUTHORIZED, "User not authenticated");
+  }
+
+  const result = await ParcelService.getUserNotifications(userId, userRole, userEmail);
+
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: "User notifications retrieved successfully",
+    data: result,
+  });
+});
+
 export const ParcelController = {
   createParcel,
   getParcelById,
@@ -346,4 +366,5 @@ export const ParcelController = {
   getParcelStats,
   getParcelStatusHistory,
   getDeliveryHistory,
+  getUserNotifications,
 };

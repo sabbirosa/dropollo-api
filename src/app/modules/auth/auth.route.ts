@@ -1,4 +1,6 @@
-import express from "express";
+import express, { NextFunction, Request, Response } from "express";
+import passport from "passport";
+import { envVars } from "../../config/env";
 import { checkAuth } from "../../middlewares/checkAuth";
 import { validateRequest } from "../../middlewares/validateRequest";
 import { AuthController } from "./auth.controller";
@@ -46,6 +48,23 @@ router.post(
   "/logout",
   checkAuth("admin", "sender", "receiver"),
   AuthController.logout
+);
+
+router.get("/google", (req: Request, res: Response, next: NextFunction) => {
+  const redirect = req.query.redirect || "/";
+  passport.authenticate("google", {
+    scope: ["profile", "email"],
+    state: redirect as string,
+  })(req, res, next);
+});
+
+// api/v1/auth/google/callback?state=/parcel
+router.get(
+  "/google/callback",
+  passport.authenticate("google", {
+    failureRedirect: `${envVars.FRONTEND_URL}/login?error=There is some issues with your account. Please contact with out support team!`,
+  }),
+  AuthController.googleCallbackController
 );
 
 export const AuthRoutes = router;

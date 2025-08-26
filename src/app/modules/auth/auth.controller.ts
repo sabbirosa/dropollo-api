@@ -1,10 +1,13 @@
 import type { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 
+import httpStatus from "http-status-codes";
+import { envVars } from "../../config/env";
 import AppError from "../../errorHelpers/AppError";
 import { catchAsync } from "../../utils/catchAsync";
 import { sendResponse } from "../../utils/sendResponse";
 import { clearAuthCookies, setAuthCookie } from "../../utils/setCookie";
+import { createUserTokens } from "../../utils/userTokens";
 import { AuthService } from "./auth.service";
 
 // Register new user
@@ -116,7 +119,7 @@ const logout = catchAsync(async (req: Request, res: Response) => {
 
   // Clear cookies using utility function
   clearAuthCookies(res);
-  
+
   console.log("Cookies cleared from response");
 
   sendResponse(res, {
@@ -148,6 +151,40 @@ const refreshToken = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const googleCallbackController = catchAsync(
+  async (req: Request, res: Response) => {
+    let redirectTo = req.query.state ? (req.query.state as string) : "";
+
+    if (redirectTo.startsWith("/")) {
+      redirectTo = redirectTo.slice(1);
+    }
+
+    // /booking => booking , => "/" => ""
+    const user = req.user;
+
+    if (!user) {
+      throw new AppError(httpStatus.NOT_FOUND, "User Not Found");
+    }
+
+    const tokenInfo = createUserTokens({
+      _id: user.userId,
+      email: user.email,
+      role: user.role as "admin" | "sender" | "receiver",
+    });
+
+    setAuthCookie(res, tokenInfo);
+
+    // sendResponse(res, {
+    //     success: true,
+    //     statusCode: httpStatus.OK,
+    //     message: "Password Changed Successfully",
+    //     data: null,
+    // })
+
+    res.redirect(`${envVars.FRONTEND_URL}/${redirectTo}`);
+  }
+);
+
 export const AuthController = {
   register,
   login,
@@ -156,4 +193,5 @@ export const AuthController = {
   changePassword,
   logout,
   refreshToken,
+  googleCallbackController,
 };
